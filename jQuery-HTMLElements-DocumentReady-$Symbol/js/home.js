@@ -11,3 +11,7 @@ $(document).ready(handleReady);
 $(document).ready(function(){
     alert("Ready to go!!!");
 })
+
+
+$("H1").hide();
+// $("H1").show();
