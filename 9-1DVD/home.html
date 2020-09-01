@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9-1 Lecture</title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+
+    <!-- search bar -->
+    <form action="" class="form-horizontal">
+        <div class="form-group pull-right">
+            <label for="searchType">Search</label>
+            <select name="searchType" id="searchType">
+                <option value="">Select</option>
+                <option value="title">Title</option>
+                <option value="director">Director</option>
+            </select>
+
+            <label for="searchTerm"></label>
+            <input type="text" name="searchTerm" id="searchTerm">
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </div>
+    </form>
+
+    <!-- table w icons -->
+    <table class="table table-bordered table-striped" id="dvdTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Directory</th>
+                <th>Rating</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>The Karate Kid</td>
+                <td>1984</td>
+                <td>John Avildsen</td>
+                <td>PG</td>
+                <td>
+                    <a href="#"><i class="fa fa-pencil"></i></a>
+                    <a href="#"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td>Crossroads</td>
+                <td>1986</td>
+                <td>Walter Hill</td>
+                <td>R</td>
+                <td>
+                    <a href="#"><i class="fa fa-pencil"></i></a>
+                    <a href="#"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- form using bootsnipp.com/forms generator -->
+    <div class="col-md-6">
+        <form class="form-horizontal" id="addDvd">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Form Name</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="title">Title</label>
+                    <div class="col-md-4">
+                        <input id="title" name="title" type="text" placeholder="" class="form-control input-md" required="">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="director">Director</label>
+                    <div class="col-md-4">
+                        <input id="director" name="director" type="text" placeholder="" class="form-control input-md" required="">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="releaseYear">Release Year</label>
+                    <div class="col-md-4">
+                        <input id="releaseYear" name="releaseYear" type="text" placeholder="" class="form-control input-md" required="">
+
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="rating">Rating</label>
+                    <div class="col-md-4">
+                        <select id="rating" name="rating" class="form-control">
+                            <option value="">G</option>
+                            <option value="">PG</option>
+                            <option value="">PG-13</option>
+                            <option value="">R</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="submitButton"></label>
+                    <div class="col-md-4">
+                        <button id="submitButton" name="submitButton" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
+
+    <!-- BS4 dependencies, jQ and p first -->
+    <script src="https://kit.fontawesome.com/33e502fc2c.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- our js scripts -->
+    <script src="js/home.js"></script>
+</body>
+
+</html>
