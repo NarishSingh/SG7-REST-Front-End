@@ -47,10 +47,7 @@ $(document).ready(function () {
     // on hover -> change to WhiteSmoke bg color
     // off hover -> return to white
     // behavior does NOT apply to header
-
-    //TODO figure out how to not select the header row
-
-    $("table.notfirst").hover(
+    $("tr>td*").hover(
         function () {
             $(this).css('background-color', 'WhiteSmoke');
         },
