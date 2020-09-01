@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     $("#akronWeather").hide();
     $("#minneapolisWeather").hide();
-    $("louisvilleWeather").hide();
+    $("#louisvilleWeather").hide();
 
     /*Nav button behavior, default hidden*/
     /*click on weather -> show/hide, default hidden*/
@@ -14,37 +14,49 @@ $(document).ready(function () {
     $("#akronButton").on('click', function () {
         $("#minneapolisInfoDiv").hide();
         $("#louisvilleInfoDiv").hide();
-        $("#akronInfoDiv").show();
+        $("#akronInfoDiv").toggle();
     });
 
     $("#akronWeatherButton").on('click', function () {
-        $("#akronWeather").show;
+        $("#akronWeather").toggle();
     });
 
     // Minneapolis
     $("#minneapolisButton").on('click', function () {
         $("#akronInfoDiv").hide();
         $("#louisvilleInfoDiv").hide();
-        $("#minneapolisInfoDiv").show();
+        $("#minneapolisInfoDiv").toggle();
     });
 
     $("#minneapolisWeatherButton").on('click', function () {
-        $("#minneapolisWeather").show();
+        $("#minneapolisWeather").toggle();
     });
 
     // Louisville
     $("#louisvilleButton").on('click', function () {
         $("#akronInfoDiv").hide();
         $("#minneapolisInfoDiv").hide();
-        $("#louisvilleInfoDiv").show();
+        $("#louisvilleInfoDiv").toggle();
     });
 
     $("#louisvilleWeatherButton").on('click', function () {
-        $("#louisvilleWeather").show();
+        $("#louisvilleWeather").toggle();
     });
 
     /*table row*/
     // on hover -> change to WhiteSmoke bg color
     // off hover -> return to white
     // behavior does NOT apply to header
+
+    //TODO figure out how to not select the header row
+
+    $("tr").hover(
+        function () {
+            $(this).css('background-color', 'WhiteSmoke');
+        },
+        function () {
+            $(this).css('background-color', 'White');
+        }
+    );
+
 });
