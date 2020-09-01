@@ -50,7 +50,7 @@ $(document).ready(function () {
 
     //TODO figure out how to not select the header row
 
-    $("tr").hover(
+    $("table.notfirst").hover(
         function () {
             $(this).css('background-color', 'WhiteSmoke');
         },
