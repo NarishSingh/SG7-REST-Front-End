@@ -7,6 +7,9 @@ $(document).ready(function () {
         type: 'GET',
         url: 'http://localhost:8080/contacts',
         success: function (contactArray) {
+            //check if cross origin is working, webstorm seems to handle it already...
+            // alert("success");
+
             // get a reference to the 'allContacts' div
             var contactsDiv = $('#allContacts');
 
@@ -53,7 +56,7 @@ $(document).ready(function () {
                 // get a reference to the 'newContact' div
                 var newContactDiv = $('#newContact');
 
-                // append contact info to the newContact div
+                // append contact info to the newContact div and render to page
                 var contactInfo = '<p>';
                 contactInfo += 'Name: ' + contact.firstName + ' ' + contact.lastName + '<br>';
                 contactInfo += 'Company: ' + contact.company + '<br>';
