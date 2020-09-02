@@ -11,6 +11,7 @@ $(document).ready(function () {
             var contactsDiv = $('#allContacts');
 
             // go through each of the returned contacts and append the info to the contactsDiv
+            // render to a p div
             $.each(contactArray, function (index, contact) {
                 var contactInfo = '<p>';
                 contactInfo += 'Name: ' + contact.firstName + ' ' + contact.lastName + '<br>';
@@ -34,6 +35,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: 'http://localhost:8080/contact',
+            //converts obj to JSON string form
             data: JSON.stringify({
                 firstName: $('#add-first-name').val(),
                 lastName: $('#add-last-name').val(),
@@ -41,11 +43,12 @@ $(document).ready(function () {
                 phone: $('#add-phone').val(),
                 email: $('#add-email').val()
             }),
+            //specifies content type to accept from the POST
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            'dataType': 'json',
+            'dataType': 'json', //TODO figure out what this is, probably just specifies data type
             success: function (contact) {
                 // get a reference to the 'newContact' div
                 var newContactDiv = $('#newContact');
