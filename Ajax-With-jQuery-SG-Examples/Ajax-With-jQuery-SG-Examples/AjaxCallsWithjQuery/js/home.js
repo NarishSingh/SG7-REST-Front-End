@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    /**
+     * Retrieve all contacts
+     */
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/contacts',
@@ -7,8 +10,7 @@ $(document).ready(function () {
             // get a reference to the 'allContacts' div
             var contactsDiv = $('#allContacts');
 
-            // go through each of the returned contacts and append the info to the
-            //contactsDiv
+            // go through each of the returned contacts and append the info to the contactsDiv
             $.each(contactArray, function (index, contact) {
                 var contactInfo = '<p>';
                 contactInfo += 'Name: ' + contact.firstName + ' ' + contact.lastName + '<br>';
@@ -25,6 +27,9 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * On click, add new contact using the form data
+     */
     $('#add-button').on('click', function () {
         $.ajax({
             type: 'POST',
