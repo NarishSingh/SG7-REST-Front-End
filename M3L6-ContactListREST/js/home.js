@@ -1,3 +1,6 @@
+/**
+ * Load contacts from server via GET request
+ */
 function loadContacts() {
     clearContactTable();
 
@@ -8,7 +11,7 @@ function loadContacts() {
         // url: 'http:/localhost:8080/contacts',
         url: 'https://tsg-contactlist.herokuapp.com/contacts',
         success: function (data, status) {
-            alert("connected");
+            // alert("connected");
 
             $.each(data, function (index, contact) {
                 var name = contact.firstName + ' ' + contact.lastName;
@@ -34,15 +37,22 @@ function loadContacts() {
     });
 }
 
+/**
+ * Clear all previous rendered contacts
+ */
 function clearContactTable() {
     $('#contentRows').empty();
 }
 
+/**
+ * main
+ */
 $(document).ready(function () {
 
     loadContacts();
 
-    $(document).on('clock', '#add-button', function (event) {
+    //add button
+    $(document).on('click', '#add-button', function (event) {
         $.ajax({
             type: 'POST',
             url: 'https://tsg-contactlist.herokuapp.com/contact',
@@ -81,4 +91,5 @@ $(document).ready(function () {
         })
     });
 
+    //edit
 });
