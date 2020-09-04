@@ -22,7 +22,7 @@ function loadContacts() {
                 row += '<td>' + name + '</td>';
                 row += '<td>' + company + '</td>';
                 row += '<td class="align-middle" onclick="showEditForm(' + id + ')"><a>Edit</a></td>';
-                row += '<td class="align-middle"><a>Delete</a></td>';
+                row += '<td class="align-middle" onclick="deleteContact(' + id + ')"><a>Delete</a></td>';
                 row += '</tr>';
 
                 contentRows.append(row);
@@ -94,7 +94,49 @@ function hideEditForm() {
 }
 
 /**
- * main
+ * Delete a contact from server via DELETE
+ * @param contactId {int} the id of a contact you want to delete
+ */
+function deleteContact(contactId) {
+    $.ajax({
+        type: 'DELETE',
+        url: 'https://tsg-contactlist.herokuapp.com/contact/' + contactId,
+        success: function (status) {
+            loadContacts();
+        }
+    });
+}
+
+function checkAndDisplayValidationErrors(input) {
+    $('#errorMessages').empty();
+
+    var errors = [];
+
+    //loop through each input and use HTML5 validation API to add to array
+    input.each(function () {
+        if (!this.validity.valid) {
+            var errorField = $('label[for=' + this.id + ']').text();
+            errors.push(errorField + ' ' + this.validationMessage);
+        }
+    });
+
+    //render msgs to the div
+    if (errors.length > 0) {
+        $.each(errors, function (index, message) {
+            $('#errorMessages')
+                .append($('<li>')
+                    .attr({class: 'list-group-item list-group-item-danger'})
+                    .text(message));
+        });
+
+        return true; //indicate there are errors
+    } else {
+        return false;
+    }
+}
+
+/**
+ * MAIN
  */
 $(document).ready(function () {
 
@@ -102,6 +144,14 @@ $(document).ready(function () {
 
     //add button handler
     $(document).on('click', '#add-button', function (event) {
+        //validate and break out if needed
+        var haveErrors = checkAndDisplayValidationErrors($('#add-form').find('input'));
+
+        if (haveErrors){
+            return false;
+        }
+
+        //if valid, proceed with the ajax request
         $.ajax({
             type: 'POST',
             url: 'https://tsg-contactlist.herokuapp.com/contact',
@@ -142,9 +192,16 @@ $(document).ready(function () {
 
     //update button handler
     $(document).on('click', '#edit-button', function (event) {
+        //validate and break out if needed
+        var haveErrors = checkAndDisplayValidationErrors($('#edit-form').find('input'));
+
+        if (haveErrors){
+            return false;
+        }
+
         $.ajax({
             type: 'PUT',
-            url: 'https://tsg-contactlist.herokuapp.com/contact/' + $('#edit-contact-id').val(),
+            url: 'https://tsg-contactlist.herokuapp.com/contact/' + $('#edit-contact-id').val(), //id's are hidden, select
             data: JSON.stringify({
                 contactId: $('#edit-contact-id').val(),
                 firstName: $('#edit-first-name').val(),
@@ -159,7 +216,7 @@ $(document).ready(function () {
             },
             'dataType': 'json',
             success: function () {
-                $('#errorMessages').empty(); //empty error msgs
+                $('#errorMessages').empty();
                 hideEditForm();
                 loadContacts();
             },

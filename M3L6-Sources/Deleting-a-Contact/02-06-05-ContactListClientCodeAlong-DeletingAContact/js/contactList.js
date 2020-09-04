@@ -205,7 +205,10 @@ function checkAndDisplayValidationErrors(input) {
     // put any error messages in the errorMessages div
     if (errorMessages.length > 0){
         $.each(errorMessages,function(index,message){
-            $('#errorMessages').append($('<li>').attr({class: 'list-group-item list-group-item-danger'}).text(message));
+            $('#errorMessages')
+                .append($('<li>')
+                    .attr({class: 'list-group-item list-group-item-danger'})
+                    .text(message));
         });
         // return true, indicating that there were errors
         return true;
