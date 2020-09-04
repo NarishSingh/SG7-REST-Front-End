@@ -14,22 +14,41 @@
 <h1 class="text-center">WEATHER</h1>
 <hr/>
 
-<div class="col-md-8">
-    <form role="form" class="form-horizontal" id="zip-code-form">
-        <div class="form-group row">
-            <label for="add-zip-code" class="col-form-label col-md-2">Zip Code: </label>
-            <div class="col-md-4">
+<div class="col-md-auto">
+    <form role="form" class="form-horizontal " id="zip-code-form">
+        <div class="form-row justify-content-center align-items-center">
+            <!--input zip code-->
+            <label for="add-zip-code" class="col-form-label col-auto">Zipcode:</label>
+            <div class="col-md-2">
                 <input type="text" class="form-control" id="add-zip-code" placeholder="Enter Zipcode" required>
             </div>
 
+            <!--select units-->
+            <label for="select-units" class="col-form-label col-auto">Units:</label>
+            <div class="col-auto">
+                <div class="button-group">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" id="select-units">
+                        Select
+                    </button>
 
+                    <div class="dropdown-menu">
+                        <!--TODO add anchor links-->
+                        <a href="#" class="dropdown-item">Imperial</a>
+                        <a href="#" class="dropdown-item">Metric</a>
+                    </div>
+                </div>
+            </div>
 
-
+            <!--Get Weather button-->
+            <div class="col-auto">
+                <button type="button" class="btn btn-outline-success" id="get-weather-btn">Get Weather!</button>
+            </div>
         </div>
+
+
     </form>
 </div>
-
-
 
 
 <!--Scripts-->
