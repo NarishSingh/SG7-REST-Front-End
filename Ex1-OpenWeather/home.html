@@ -17,9 +17,12 @@
 <h1 class="text-center">WEATHER</h1>
 <hr/>
 
+<!--Error msgs-->
+<ul class="list-group" id="errorMessages"></ul>
+
 <!--form-->
 <div class="col-auto" id="get-zip-form">
-    <form role="form" class="form-horizontal " id="zip-code-form">
+    <form role="form" class="form-horizontal" id="zip-code-form">
         <div class="form-row justify-content-center align-items-center">
             <!--input zip code-->
             <label for="add-zip-code" class="col-form-label col-auto">Zipcode:</label>
@@ -46,10 +49,7 @@
             <!--Get Weather button-->
             <div class="col-auto">
                 <!--TODO implement-->
-                <button type="button" class="btn btn-outline-success" id="get-weather-btn"
-                        onclick="getConditionsWeather()">
-                    Get Weather!
-                </button>
+                <button type="button" class="btn btn-outline-success" id="get-weather-btn">Get Weather!</button>
             </div>
         </div>
     </form>
