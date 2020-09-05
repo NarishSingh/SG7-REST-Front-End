@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,10 +32,8 @@
             <div class="col-auto">
                 <div class="button-group">
                     <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" id="select-units">
-                        Select
+                            aria-haspopup="true" aria-expanded="false" id="select-units">Imperial
                     </button>
-
                     <div class="dropdown-menu">
                         <!--TODO add anchor links-->
                         <a href="#" class="dropdown-item">Imperial</a>
@@ -60,28 +57,57 @@
 <!--Current conditions in city-->
 <div class="row" id="conditions-row">
     <hr/>
+
     <!--TODO need to append city name here-->
     <h1 class="text-center" id="city-header">Current Conditions in </h1>
 
     <!--icon and description-->
-    <div class="col-md-6" id="icon-desc">
+    <div class="col-md-6 justify-content-center" id="icon-desc">
 
     </div>
 
     <!--Temperature, humidity, and wind data-->
-    <div class="col-md-6" id="temp-humidity-wing">
-
+    <!--TODO append data from service, be mindful of units-->
+    <div class="col-md-6 justify-content-center" id="temp-humidity-wing">
+        <p id="temp">Temperature: </p>
+        <p id="humidity">Humidity: </p>
+        <p id="wind-speed">Wind: </p>
     </div>
 
     <hr/>
 </div>
 
 <!--5 day forecast-->
-<h1 class="text-center">5 Day Forecast</h1>
 <div class="row" id="forecast-row">
+    <h1 class="text-center">5 Day Forecast</h1>
+
     <!--TODO append each days forecast-->
     <div class="row" id="5-days-forecast">
-
+        <div class="col-md-2 justify-content-center" id="forecast-1-day">
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+        </div>
+        <div class="col-md-2 justify-content-center" id="forecast-2-day">
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+        </div>
+        <div class="col-md-2 justify-content-center" id="forecast-3-day">
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+        </div>
+        <div class="col-md-2 justify-content-center" id="forecast-4-day">
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+        </div>
+        <div class="col-md-2 justify-content-center" id="forecast-5-day">
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+            <p class="text-center"></p>
+        </div>
     </div>
 </div>
 
