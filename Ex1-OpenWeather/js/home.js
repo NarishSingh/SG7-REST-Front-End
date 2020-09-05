@@ -12,13 +12,7 @@ $(document).ready(function () {
         $('#conditions-row').show();
         $('#forecast-row').show();
 
-        //retrieve zipcode
-        var zip = $('#add-zip-code').val().text();
-
-        //retrieve unit type
-        var unit = $('#select-units-dropdown').val($(this)).text();
-
-        getConditionsWeather(zip, unit);
+        getConditionsWeather();
     });
 })
 
@@ -28,27 +22,34 @@ $(document).ready(function () {
 /**
  * Retrieve and render conditions and weather data for a given zip code on click
  */
-function getConditionsWeather(zipcode, unitType) {
+function getConditionsWeather() {
+//retrieve zipcode
+    var zip = $('#add-zip-code').val().text();
 
+    //retrieve unit type
+    var unit = $('#select-units');
 
     //format url with zipcode and insert unit system
-    var urlForApi = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zipcode + ',us&units=';
-    urlForApi += unitType + '&APPID=f29ed23e97e67d948334f9b71c66421d';
+    var urlForApi = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=';
+    urlForApi += unit + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
     $.ajax({
         type: 'GET',
         url: urlForApi,
         success: function (weatherData) {
-            alert("Retrieved");
+            alert("Retrieved"); //TODO debug, remove after
 
             //TODO implement
 
             //append city name to #city-header
+            //FIXME doesn't work at all
             var cityHeaderText = "Current Conditions in " + weatherData.city.name;
-            $('#city-header').append('<p>').text(cityHeaderText);
+            $('#city-header').append('<h1>').text(cityHeaderText);
 
         },
         error: function () {
+            alert("nope"); //TODO debug, remove after
+
             $('#errorMessages')
                 .append($('<li>'))
                 .attr({class: 'list-group-item list-group-item-danger'})
