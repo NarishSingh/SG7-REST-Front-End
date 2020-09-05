@@ -31,19 +31,12 @@
             </div>
 
             <!--select units-->
-            <label for="select-units-dropdown" class="col-form-label col-auto">Units:</label>
+            <label for="select-units" class="col-form-label col-auto">Units:</label>
             <div class="col-auto">
-                <div class="button-group">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" id="select-units-dropdown">
-                        Imperial
-                    </button>
-                    <div class="dropdown-menu">
-                        <!--TODO add anchor links?-->
-                        <a href="#" class="dropdown-item">Imperial</a>
-                        <a href="#" class="dropdown-item">Metric</a>
-                    </div>
-                </div>
+                <select name="" id="select-units" class="custom-select">
+                    <option value="imperial" selected>Imperial</option>
+                    <option value="metric">Metric</option>
+                </select>
             </div>
 
             <!--Get Weather button-->
@@ -60,7 +53,8 @@
     <hr/>
 
     <!--TODO need to append city name here-->
-    <h1 class="text-center" id="city-header">Current Conditions in </h1>
+<!--    <h1 class="text-center" id="city-header">Current Conditions in </h1>-->
+    <div id="city-header"></div>
 
     <!--icon and description-->
     <div class="col-md-6 justify-content-center" id="icon-desc">
