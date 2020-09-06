@@ -23,8 +23,8 @@ $(document).ready(function () {
  * Retrieve and render conditions and weather data for a given zip code on click
  */
 function getConditionsWeather() {
-//retrieve zipcode
-    var zip = $('#add-zip-code').val().text();
+    //retrieve zipcode
+    var zip = $('#add-zip-code').val();
 
     //retrieve unit type
     var unit = $('#select-units');
@@ -36,20 +36,17 @@ function getConditionsWeather() {
     $.ajax({
         type: 'GET',
         url: urlForApi,
-        success: function (weatherData) {
-            alert("Retrieved"); //TODO debug, remove after
-
+        success: function (weatherData, status) {
             //TODO implement
 
             //append city name to #city-header
-            //FIXME doesn't work at all
             var cityHeaderText = "Current Conditions in " + weatherData.city.name;
-            $('#city-header').append('<h1>').text(cityHeaderText);
+            $('#city-header').append('<h1></h1>').text(cityHeaderText);
+
+            //icon
 
         },
         error: function () {
-            alert("nope"); //TODO debug, remove after
-
             $('#errorMessages')
                 .append($('<li>'))
                 .attr({class: 'list-group-item list-group-item-danger'})
