@@ -19,6 +19,7 @@ $(document).ready(function () {
 //////////////////////////////////////////////////////////
 // METHODS
 //////////////////////////////////////////////////////////
+
 /**
  * Retrieve and render conditions and weather data for a given zip code on click
  */
@@ -47,12 +48,18 @@ function getConditionsWeather() {
 
             /*current conditions*/
             //icon
-            /*
+            var iconId = weatherData.weather[0].icon;
+
+            // var weatherArray = JSON.parse(weatherData.weather[0]);
+            // var iconId = weatherArray.icon;
+
+            // $('#condition-icon').append('<img src="http://openweathermap.org/img/w/' + iconId + '.png" alt="Current condition icon" class="img-thumbnail"');
+
             $.ajax({
                 type: 'GET',
                 url: 'http://openweathermap.org/img/w/' + iconId + '.png',
                 success: function (iconPic, status) {
-                    alert("Retrieved icon");
+                    alert("Retrieved"); //TODO debug only, remove
 
                     //TODO append pic, do css to center it
                 },
@@ -63,7 +70,6 @@ function getConditionsWeather() {
                         .text('Error calling web service.');
                 }
             });
-             */
 
             //description
 
