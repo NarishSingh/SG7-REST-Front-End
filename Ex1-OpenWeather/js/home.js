@@ -110,12 +110,12 @@ function getConditionsWeather() {
                 //5 days * 8 obj's/day = 40 objs
                 for (let i = 0; i < 5; i++) {
                     for (let j = 0; j < 8; j++) {
-                        if (forecastArray[(i*8)+j].main.temp_max > highest){
-                            highest = forecastArray[(i*8)+j].main.temp_max;
+                        if (forecastArray[(i * 8) + j].main.temp_max > highest) {
+                            highest = forecastArray[(i * 8) + j].main.temp_max;
                         }
 
-                        if (forecastArray[(i*8)+j].main.temp_min < lowest){
-                            highest = forecastArray[(i*8)+j].main.temp_min;
+                        if (forecastArray[(i * 8) + j].main.temp_min < lowest) {
+                            highest = forecastArray[(i * 8) + j].main.temp_min;
                         }
                     }
 
@@ -123,9 +123,9 @@ function getConditionsWeather() {
                     lowTemps.push(lowest);
                 }
 
+                /*icons*/
 
             });
-
 
 
             /*
