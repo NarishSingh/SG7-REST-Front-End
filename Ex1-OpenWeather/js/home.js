@@ -54,8 +54,10 @@ function getConditionsWeather() {
             $('#condition-icon').append('<img src="' + iconSRC + '" alt="Current conditions icon">');
 
             //description
+            var descriptionString = weatherData.weather[0].main + ": " + weatherData.weather[0].description;
+            $('#condition-desc').append('<p></p>').text(descriptionString);
 
-
+            /*stats*/
 
         },
         error: function () {

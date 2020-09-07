@@ -11,3 +11,12 @@
     font-size: 36px;
     font-weight: bold;
 }
+
+#conditions-row{
+    align-content: center;
+}
+
+#condition-desc{
+    text-align: center;
+    font-weight: bold;
+}
