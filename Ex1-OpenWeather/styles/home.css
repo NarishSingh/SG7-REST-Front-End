@@ -6,17 +6,17 @@
     display: none;
 }
 
-#city-header{
+#city-header {
     text-align: center;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: bold;
 }
 
-#conditions-row{
-    align-content: center;
-}
-
-#condition-desc{
+#condition-desc {
     text-align: center;
     font-weight: bold;
+}
+
+#temp-humidity-wind {
+    text-align: center;
 }
