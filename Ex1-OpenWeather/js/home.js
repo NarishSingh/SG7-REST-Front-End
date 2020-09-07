@@ -49,24 +49,12 @@ function getConditionsWeather() {
             /*current conditions*/
             //icon
             var iconId = weatherData.weather[0].icon;
+            var iconSRC = 'http://openweathermap.org/img/w/' + iconId + '.png'
 
-            $.ajax({
-                type: 'GET',
-                url: 'http://openweathermap.org/img/w/' + iconId + '.png',
-                success: function (iconPic, status) {
-                    alert("Retrieved"); //TODO debug only, remove
-
-                    //TODO append pic, do css to center it
-                },
-                error: function () {
-                    $('#errorMessages')
-                        .append($('<li>'))
-                        .attr({class: 'list-group-item list-group-item-danger'})
-                        .text('Error calling web service.');
-                }
-            });
+            $('#condition-icon').append('<img src="' + iconSRC + '" alt="Current conditions icon">');
 
             //description
+
 
 
         },
