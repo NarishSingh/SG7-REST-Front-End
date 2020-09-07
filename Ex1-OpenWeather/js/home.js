@@ -50,11 +50,6 @@ function getConditionsWeather() {
             //icon
             var iconId = weatherData.weather[0].icon;
 
-            // var weatherArray = JSON.parse(weatherData.weather[0]);
-            // var iconId = weatherArray.icon;
-
-            // $('#condition-icon').append('<img src="http://openweathermap.org/img/w/' + iconId + '.png" alt="Current condition icon" class="img-thumbnail"');
-
             $.ajax({
                 type: 'GET',
                 url: 'http://openweathermap.org/img/w/' + iconId + '.png',
