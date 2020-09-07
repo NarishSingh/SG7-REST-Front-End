@@ -31,11 +31,13 @@ function getConditionsWeather() {
     //retrieve unit type
     var unit = $('#select-units').val();
 
-    //CURRENT URL
-    var urlForToday = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=' + unit + '&APPID=f29ed23e97e67d948334f9b71c66421d';
+    //CURRENT Conditions URL
+    var urlForToday = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=' + unit
+        + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
-    //FORECAST URL - format url with zipcode and insert unit system
-    var urlForApi = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=' + unit + '&APPID=f29ed23e97e67d948334f9b71c66421d';
+    //FORECAST URL
+    var urlForApi = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=' + unit
+        + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
     /*CURRENT WEATHER*/
     $.ajax({
@@ -92,8 +94,66 @@ function getConditionsWeather() {
         type: 'GET',
         url: urlForApi,
         success: function (weatherData, status) {
-            var forecastArray = weatherData.list; //each day in an array [0-4]
+            //note: each day has 8 obj's corresponding to 3hr blocks
+            var forecastArray = weatherData.list;
+            var highTemps = [];
+            var lowTemps = [];
+            var icons = [];
+            var dateStrings = [];
 
+            /*get day's info*/
+            $.each(forecastArray, function () {
+                var highest = 0;
+                var lowest = 999;
+
+                /*H/L determination*/
+                //5 days * 8 obj's/day = 40 objs
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 8; j++) {
+                        if (forecastArray[(i*8)+j].main.temp_max > highest){
+                            highest = forecastArray[(i*8)+j].main.temp_max;
+                        }
+
+                        if (forecastArray[(i*8)+j].main.temp_min < lowest){
+                            highest = forecastArray[(i*8)+j].main.temp_min;
+                        }
+                    }
+
+                    highTemps.push(highest);
+                    lowTemps.push(lowest);
+                }
+
+
+            });
+
+
+
+            /*
+            var day1Array = [];
+            for (var i = 0; i < 8; i++) {
+                day1Array.push(forecastArray[i]);
+            }
+
+            var day2Array = [];
+            for (var i = 8; i < 16; i++) {
+                day2Array.push(forecastArray[i]);
+            }
+
+            var day3Array = [];
+            for (var i = 16; i < 24; i++) {
+                day3Array.push(forecastArray[i]);
+            }
+
+            var day4Array = [];
+            for (var i = 24; i < 32; i++) {
+                day4Array.push(forecastArray[i]);
+            }
+
+            var day5Array = [];
+            for (var i = 32; i < 40; i++) {
+                day5Array.push(forecastArray[i]);
+            }
+             */
 
         },
         error: function () {
