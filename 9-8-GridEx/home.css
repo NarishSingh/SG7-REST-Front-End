@@ -16,27 +16,18 @@ img {
     padding: 20px;
 }
 
-/*Media queries version - will allow you to change the grid based on screen size*/
-
+/*Media queries version - will allow you to change the grid dynamically based on screen size*/
 /*
 Sizes:
-
-Extra small (xs) devices (portrait phones, less than 576px)
-
-Small (sm) devices (landscape phones, 576px and up)
-@media (min-width: 576px) { ... }
-
-Medium (md) devices (tablets, 768px and up)
-@media (min-width: 768px) { ... }
-
-Large (lg) devices (desktops, 992px and up)
-@media (min-width: 992px) { ... }
-
-Extra (xl) large devices (large desktops, 1200px and up)
+-Extra small (xs) devices (portrait phones, less than 576px)
+-Small (sm) devices (landscape phones, 576px and up)
+-Medium (md) devices (tablets, 768px and up)
+-Large (lg) devices (desktops, 992px and up)
+-Extra (xl) large devices (large desktops, 1200px and up)
  */
 @media screen and (min-width: 900px) {
     .boxContainer {
-        width: 60%;
+        width: 80%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
     }
@@ -52,7 +43,6 @@ Extra (xl) large devices (large desktops, 1200px and up)
 
 @media screen and (max-width: 576px) {
     .boxContainer {
-        width: 60%;
         display: grid;
         grid-template-columns: repeat(1, 1fr);
     }
