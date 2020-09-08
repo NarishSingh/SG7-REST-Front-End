@@ -9,7 +9,6 @@ docs/examples: https://openweathermap.org/current
 $(document).ready(function () {
     //Get Weather btn handler
     $(document).on('click', '#get-weather-btn', function (event) {
-
         $('#conditions-row').show();
         $('#forecast-row').show();
 
@@ -94,39 +93,62 @@ function getConditionsWeather() {
         type: 'GET',
         url: urlForApi,
         success: function (weatherData, status) {
+            alert("forecasted"); //TODO debug only, remove later
+
             //note: each day has 8 obj's corresponding to 3hr blocks
             var forecastArray = weatherData.list;
             var highTemps = [];
             var lowTemps = [];
-            var icons = [];
+            var iconStrings = [];
+            var descrpStrings = [];
             var dateStrings = [];
 
-            /*get day's info*/
-            $.each(forecastArray, function () {
-                var highest = 0;
-                var lowest = 999;
+            var highest = 0;
+            var lowest = 999;
 
-                /*H/L determination*/
-                //5 days * 8 obj's/day = 40 objs
-                for (let i = 0; i < 5; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        if (forecastArray[(i * 8) + j].main.temp_max > highest) {
-                            highest = forecastArray[(i * 8) + j].main.temp_max;
-                        }
-
-                        if (forecastArray[(i * 8) + j].main.temp_min < lowest) {
-                            highest = forecastArray[(i * 8) + j].main.temp_min;
-                        }
+            /*Day by day info*/
+            //5 days * 8 obj's/day = 40 objs
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 8; j++) {
+                    if (forecastArray[(i * 8) + j].main.temp_max > highest) {
+                        highest = forecastArray[(i * 8) + j].main.temp_max;
                     }
 
-                    highTemps.push(highest);
-                    lowTemps.push(lowest);
+                    if (forecastArray[(i * 8) + j].main.temp_min < lowest) {
+                        highest = forecastArray[(i * 8) + j].main.temp_min;
+                    }
+
+                    if (forecastArray[(i * 8) + j].dt.txt.substring(11) === "12:00:00") {
+                        //just using 12 noon for now
+                        iconStrings.push(forecastArray[(i * 8) + j].weather.icon);
+                        descrpStrings.push(forecastArray[(i * 8) + j].weather.description);
+                    }
                 }
 
-                /*icons*/
+                highTemps.push(highest);
+                lowTemps.push(lowest);
+                dateStrings.push(forecastArray[i * 8].dt_txt.substring(0, 9));
+            }
 
-            });
+            for (let i = 0; i < 5; i++) {
+                var iconUrl = 'http://openweathermap.org/img/w/' + iconStrings[i] + '.png'
+                var unit = $('#select-units').val();
+                var hlString;
+                if (unit === "imperial") {
+                    hlString = "H: " + highTemps[i] + "°F L: " + lowTemps[i] + "°F";
+                } else {
+                    hlString = "H: " + highTemps[i] + "°C L: " + lowTemps[i] + "°C";
+                }
 
+                var daysForecastDiv = '<div>' +
+                    '<p>' + dateStrings[i] + '</p>' +
+                    '<img class="img-fluid" src="' + iconUrl + '" alt="Forecast Icon">' +
+                    '<p>' + descrpStrings[i] + '</p>' +
+                    '<p>' + hlString+ '</p>' +
+                    '</div>'
+
+                $('#5-days-forecast').append(daysForecastDiv);
+            }
 
             /*
             var day1Array = [];
@@ -154,7 +176,6 @@ function getConditionsWeather() {
                 day5Array.push(forecastArray[i]);
             }
              */
-
         },
         error: function () {
             $('#errorMessages')
