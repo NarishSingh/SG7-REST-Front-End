@@ -51,7 +51,7 @@ $(document).ready(function () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            'dataType': 'json', //TODO figure out what this is, probably just specifies data type
+            'dataType': 'json',
             success: function (contact) {
                 // get a reference to the 'newContact' div
                 var newContactDiv = $('#newContact');
