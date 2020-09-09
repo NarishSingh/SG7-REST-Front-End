@@ -118,7 +118,7 @@ function getConditionsWeather() {
                         highest = forecastArray[(i * 8) + j].main.temp_min;
                     }
 
-                    if (forecastArray[(i * 8) + j].dt.txt.substring(11) === "12:00:00") {
+                    if (forecastArray[(i * 8) + j].dt_txt.substring(11) === "12:00:00") {
                         //just using 12 noon for now
                         iconStrings.push(forecastArray[(i * 8) + j].weather.icon);
                         descrpStrings.push(forecastArray[(i * 8) + j].weather.description);
