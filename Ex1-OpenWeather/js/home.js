@@ -35,7 +35,7 @@ function getConditionsWeather() {
         + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
     //FORECAST URL
-    var urlForApi = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=' + unit
+    var urlForForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=' + unit
         + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
     /*CURRENT WEATHER*/
@@ -91,10 +91,8 @@ function getConditionsWeather() {
     /*5 DAY FORECAST*/
     $.ajax({
         type: 'GET',
-        url: urlForApi,
+        url: urlForForecast,
         success: function (weatherData, status) {
-            alert("forecasted"); //TODO debug only, remove later
-
             //note: each day has 8 obj's corresponding to 3hr blocks
             var forecastArray = weatherData.list;
             var highTemps = [];
@@ -115,7 +113,7 @@ function getConditionsWeather() {
                     }
 
                     if (forecastArray[(i * 8) + j].main.temp_min < lowest) {
-                        highest = forecastArray[(i * 8) + j].main.temp_min;
+                        lowest = forecastArray[(i * 8) + j].main.temp_min;
                     }
 
                     if (forecastArray[(i * 8) + j].dt_txt.substring(11) === "12:00:00") {
@@ -127,7 +125,7 @@ function getConditionsWeather() {
 
                 highTemps.push(highest);
                 lowTemps.push(lowest);
-                dateStrings.push(forecastArray[i * 8].dt_txt.substring(0, 9));
+                dateStrings.push(forecastArray[i * 8].dt_txt.substring(0, 10));
             }
 
             for (let i = 0; i < 5; i++) {
@@ -140,42 +138,15 @@ function getConditionsWeather() {
                     hlString = "H: " + highTemps[i] + "°C L: " + lowTemps[i] + "°C";
                 }
 
-                var daysForecastDiv = '<div>' +
+                var daysForecastDiv = '<div class="col">' +
                     '<p>' + dateStrings[i] + '</p>' +
                     '<img class="img-fluid" src="' + iconUrl + '" alt="Forecast Icon">' +
                     '<p>' + descrpStrings[i] + '</p>' +
                     '<p>' + hlString+ '</p>' +
                     '</div>'
 
-                $('#5-days-forecast').append(daysForecastDiv);
+                $('#5-days-forecast').replaceWith(daysForecastDiv);
             }
-
-            /*
-            var day1Array = [];
-            for (var i = 0; i < 8; i++) {
-                day1Array.push(forecastArray[i]);
-            }
-
-            var day2Array = [];
-            for (var i = 8; i < 16; i++) {
-                day2Array.push(forecastArray[i]);
-            }
-
-            var day3Array = [];
-            for (var i = 16; i < 24; i++) {
-                day3Array.push(forecastArray[i]);
-            }
-
-            var day4Array = [];
-            for (var i = 24; i < 32; i++) {
-                day4Array.push(forecastArray[i]);
-            }
-
-            var day5Array = [];
-            for (var i = 32; i < 40; i++) {
-                day5Array.push(forecastArray[i]);
-            }
-             */
         },
         error: function () {
             $('#errorMessages')

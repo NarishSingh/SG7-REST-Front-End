@@ -20,3 +20,9 @@
 #temp-humidity-wind {
     text-align: center;
 }
+
+#5-days-forecast{
+    display: grid;
+    width: 80%;
+    grid-template-columns: repeat(5, 1fr);
+}
