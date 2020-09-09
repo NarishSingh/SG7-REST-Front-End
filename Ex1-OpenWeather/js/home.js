@@ -120,8 +120,8 @@ function getConditionsWeather() {
 
                     if (forecastArray[(i * 8) + j].dt_txt.substring(11) === "12:00:00") {
                         //just using 12 noon for now
-                        iconStrings.push(forecastArray[(i * 8) + j].weather.icon);
-                        descrpStrings.push(forecastArray[(i * 8) + j].weather.description);
+                        iconStrings.push(forecastArray[(i * 8) + j].weather[0].icon);
+                        descrpStrings.push(forecastArray[(i * 8) + j].weather[0].description);
                     }
                 }
 
