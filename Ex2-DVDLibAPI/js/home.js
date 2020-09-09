@@ -2,7 +2,15 @@
 // MAIN
 ////////////////////////////////////////////////////////
 $(document).ready(function (){
+    //create DVD button handler
+    $(document).on('click', '#create-dvd-btn', function () {
 
+    });
+
+    //search DVD button handler
+    $(document).on('click', '#search-dvd-input', function () {
+
+    });
 });
 
 ////////////////////////////////////////////////////////

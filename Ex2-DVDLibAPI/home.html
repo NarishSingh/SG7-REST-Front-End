@@ -9,10 +9,27 @@
     <!--styles-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
     <link rel="stylesheet" href="styles/home.css">
 </head>
 <body>
+
+<div class="row" id="create-search-header">
+    <button type="button" class="btn btn-primary" id="create-dvd-btn">Create DVD</button>
+
+    <label for="search-dvd-input"></label>
+    <input type="text" class="form-control" id="search-dvd-input" placeholder="Search Term">
+
+    <label for="search-category-select"></label>
+    <select name="search-category" id="search-category-select" class="custom-select">
+        <option selected disabled hidden>Search Category</option>
+        <option value="title">Title</option>
+        <option value="year">Release Year</option>
+        <option value="director">Director Name</option>
+        <option value="rating">Rating</option>
+    </select>
+
+    <button type="button" class="btn btn-info" id="search-btn">Search</button>
+</div>
 
 <!--Scripts-->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -26,7 +43,6 @@
         crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
         integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous"></script>
-
 <script src="js/home.js"></script>
 </body>
 </html>
