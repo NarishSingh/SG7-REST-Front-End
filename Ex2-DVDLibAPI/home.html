@@ -13,22 +13,24 @@
 </head>
 <body>
 
-<div class="row" id="create-search-header">
+<div class="row justify-content-center align-items-center" id="create-search-header">
     <button type="button" class="btn btn-primary" id="create-dvd-btn">Create DVD</button>
 
-    <label for="search-dvd-input"></label>
-    <input type="text" class="form-control" id="search-dvd-input" placeholder="Search Term">
+    <form role="form" class="form-row" id="search-form">
+        <label for="search-dvd-input" class="col-form-label">Search Library: </label>
+        <input type="text" class="form-control" id="search-dvd-input" placeholder="Search Term">
 
-    <label for="search-category-select"></label>
-    <select name="search-category" id="search-category-select" class="custom-select">
-        <option selected disabled hidden>Search Category</option>
-        <option value="title">Title</option>
-        <option value="year">Release Year</option>
-        <option value="director">Director Name</option>
-        <option value="rating">Rating</option>
-    </select>
+        <label for="search-category-select"></label>
+        <select name="search-category" id="search-category-select" class="custom-select">
+            <option selected disabled hidden>Search Category</option>
+            <option value="title">Title</option>
+            <option value="year">Release Year</option>
+            <option value="director">Director Name</option>
+            <option value="rating">Rating</option>
+        </select>
 
-    <button type="button" class="btn btn-info" id="search-btn">Search</button>
+        <button type="button" class="btn btn-info" id="search-btn">Search</button>
+    </form>
 </div>
 
 <!--Scripts-->
@@ -42,7 +44,8 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
-        integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous"></script>
+        integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c"
+        crossorigin="anonymous"></script>
 <script src="js/home.js"></script>
 </body>
 </html>

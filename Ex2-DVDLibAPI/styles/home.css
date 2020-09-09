@@ -1,3 +1,3 @@
-input, select {
-    width: auto;
+#create-search-header {
+    display: grid;
 }
