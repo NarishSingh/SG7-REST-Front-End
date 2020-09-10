@@ -12,43 +12,43 @@
     <link rel="stylesheet" href="styles/home.css">
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row" id="form-container">
+        <form class="form-inline" id="create-search-header">
+            <button type="button" class="btn btn-secondary" id="create-dvd-btn">Create DVD</button>
+            <label for="search-dvd-input" class="form-label">Search:</label>
+            <input type="text" class="form-control" id="search-dvd-input" placeholder="Search Term">
 
-<div class="row justify-content-center align-items-center" id="create-search-header">
-    <button type="button" class="btn btn-primary" id="create-dvd-btn">Create DVD</button>
+            <label for="search-category-select"></label>
+            <select name="search-category" id="search-category-select" class="custom-select">
+                <option selected disabled hidden>Search Category</option>
+                <option value="title">Title</option>
+                <option value="year">Release Year</option>
+                <option value="director">Director Name</option>
+                <option value="rating">Rating</option>
+            </select>
 
-    <form role="form" class="form-row" id="search-form">
-        <label for="search-dvd-input" class="col-form-label">Search Library: </label>
-        <input type="text" class="form-control" id="search-dvd-input" placeholder="Search Term">
+            <button type="button" class="btn btn-primary" id="search-btn">Search</button>
+        </form>
+    </div>
 
-        <label for="search-category-select"></label>
-        <select name="search-category" id="search-category-select" class="custom-select">
-            <option selected disabled hidden>Search Category</option>
-            <option value="title">Title</option>
-            <option value="year">Release Year</option>
-            <option value="director">Director Name</option>
-            <option value="rating">Rating</option>
-        </select>
+    <hr/>
 
-        <button type="button" class="btn btn-info" id="search-btn">Search</button>
-    </form>
-</div>
-
-<hr/>
-
-<!--Library Table-->
-<div id="library-container">
-    <table class="table table-striped table-dark" id="dvd-library">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Release Date</th>
-            <th>Director</th>
-            <th>Rating</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-    </table>
+    <!--Library Table-->
+    <div id="library-container">
+        <table class="table table-striped table-dark" id="dvd-library">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Director</th>
+                <th>Rating</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 
 <!--Scripts-->

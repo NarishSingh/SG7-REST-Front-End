@@ -1,11 +1,19 @@
-#create-search-header {
-    display: grid;
-}
-
-#library-container{
+#form-container{
     display: flex;
+    justify-content: center;
 }
 
-#dvd-library{
+#create-search-header {
+    display: flex;
+    padding: 15px;
+}
+
+#library-container {
+    display: flex;
+    justify-content: center;
+}
+
+#dvd-library {
     width: 90%;
+    text-align: center;
 }
