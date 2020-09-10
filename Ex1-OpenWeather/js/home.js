@@ -97,7 +97,7 @@ function getConditionsWeather() {
         success: function (weatherData, status) {
             clearErrorMsgs();
 
-            var daysToRender = 5;
+            var date = new Set();
             var forecastArray = weatherData.list;
             var highTemps = [];
             var lowTemps = [];
@@ -106,15 +106,16 @@ function getConditionsWeather() {
             var dateStrings = [];
             var highest = 0;
             var lowest = 999;
+            var ct = 1;
 
-            //create an array of dates within the response
-            var c = 0;
-            var singleDate = forecastArray.list[c].dt_txt;
-            for (let i = 0; i < 8; i++) {
-                if(forecastArray.list[i].dt_txt.substring(0, 10) === singleDate){
-                    c++;
+            $.forEach(forecastArray, function (i, daysWeather) {
+                //get unique dates
+                date.add(daysWeather.dt_txt.substring(0, 10));
+
+                if (date.size === ct){
+
                 }
-            }
+            })
 
             /*Day by day info*/
             /*
