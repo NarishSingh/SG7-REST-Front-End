@@ -43,6 +43,8 @@ function getConditionsWeather() {
         type: 'GET',
         url: urlForToday,
         success: function (weatherData, status) {
+            clearErrorMsgs();
+
             /*header*/
             //append city name to #city-header
             var cityHeaderText = "Current Conditions in " + weatherData.name;
@@ -93,19 +95,29 @@ function getConditionsWeather() {
         type: 'GET',
         url: urlForForecast,
         success: function (weatherData, status) {
-            //note: each day has 8 obj's corresponding to 3hr blocks
+            clearErrorMsgs();
+
+            var daysToRender = 5;
             var forecastArray = weatherData.list;
             var highTemps = [];
             var lowTemps = [];
             var iconStrings = [];
             var descrpStrings = [];
             var dateStrings = [];
-
             var highest = 0;
             var lowest = 999;
 
+            //create an array of dates within the response
+            var c = 0;
+            var singleDate = forecastArray.list[c].dt_txt;
+            for (let i = 0; i < 8; i++) {
+                if(forecastArray.list[i].dt_txt.substring(0, 10) === singleDate){
+                    c++;
+                }
+            }
+
             /*Day by day info*/
-            //5 days * 8 obj's/day = 40 objs
+            /*
             for (let i = 0; i < 5; i++) {
                 for (let j = 0; j < 8; j++) {
                     if (forecastArray[(i * 8) + j].main.temp_max > highest) {
@@ -128,6 +140,9 @@ function getConditionsWeather() {
                 dateStrings.push(forecastArray[i * 8].dt_txt.substring(0, 10));
             }
 
+             */
+
+            //FIXME edit based on changes
             for (let i = 0; i < 5; i++) {
                 var iconUrl = 'http://openweathermap.org/img/w/' + iconStrings[i] + '.png'
                 var unit = $('#select-units').val();
@@ -155,4 +170,11 @@ function getConditionsWeather() {
                 .text('Error calling web service.');
         }
     });
+}
+
+/**
+ * Clear out error messages
+ */
+function clearErrorMsgs() {
+    $('errorMessages').empty();
 }
