@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DVD Library</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/home.css">
 </head>
 
@@ -21,11 +23,14 @@
                             <option value="title">Title</option>
                             <option value="director">Director</option>
                         </select>
+
                         <label for="searchTerm"></label>
                         <input type="text" name="searchTerm" id="searchTerm">
+
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+
                 <table class="table table-bordered table-striped" id="dvdTable">
                     <thead>
                         <tr>
@@ -63,29 +68,40 @@
             <div class="col-md-6">
                 <form class="form-horizontal" id="addDvd">
                     <fieldset>
+
                         <!-- Form Name -->
                         <legend>Add DVD</legend>
+
                         <!-- Text input-->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="title">Title</label>
                             <div class="col-md-4">
-                                <input id="title" name="title" type="text" placeholder="" class="form-control input-md" required="">
+                                <input id="title" name="title" type="text" placeholder="" class="form-control input-md"
+                                    required="">
+
                             </div>
                         </div>
+
                         <!-- Text input-->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="director">Director</label>
                             <div class="col-md-4">
-                                <input id="director" name="director" type="text" placeholder="" class="form-control input-md" required="">
+                                <input id="director" name="director" type="text" placeholder=""
+                                    class="form-control input-md" required="">
+
                             </div>
                         </div>
+
                         <!-- Text input-->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="releaseYear">Release Year</label>
                             <div class="col-md-4">
-                                <input id="releaseYear" name="releaseYear" type="text" placeholder="" class="form-control input-md" required="">
+                                <input id="releaseYear" name="releaseYear" type="text" placeholder=""
+                                    class="form-control input-md" required="">
+
                             </div>
                         </div>
+
                         <!-- Select Basic -->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="rating">Rating</label>
@@ -98,6 +114,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <!-- Button -->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="submit"></label>
@@ -105,6 +122,7 @@
                                 <button id="submit" name="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
+
                     </fieldset>
                 </form>
             </div>
@@ -121,27 +139,37 @@
                     <div class="modal-body">
                         <form class="form-horizontal" id="editDvd">
                             <fieldset>
+
                                 <!-- Text input-->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="title">Title</label>
                                     <div class="col-md-4">
-                                        <input id="editTitle" name="title" type="text" placeholder="" class="form-control input-md" required="">
+                                        <input id="editTitle" name="title" type="text" placeholder=""
+                                            class="form-control input-md" required="">
+
                                     </div>
                                 </div>
+
                                 <!-- Text input-->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="director">Director</label>
                                     <div class="col-md-4">
-                                        <input id="editDirector" name="director" type="text" placeholder="" class="form-control input-md" required="">
+                                        <input id="editDirector" name="director" type="text" placeholder=""
+                                            class="form-control input-md" required="">
+
                                     </div>
                                 </div>
+
                                 <!-- Text input-->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="releaseYear">Release Year</label>
                                     <div class="col-md-4">
-                                        <input id="editReleaseYear" name="releaseYear" type="text" placeholder="" class="form-control input-md" required="">
+                                        <input id="editReleaseYear" name="releaseYear" type="text" placeholder=""
+                                            class="form-control input-md" required="">
+
                                     </div>
                                 </div>
+
                                 <!-- Select Basic -->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="rating">Rating</label>
@@ -154,7 +182,9 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <input type="hidden" id="editDvdId" name="editDvdId">
+
                                 <!-- Button -->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="submit"></label>
@@ -162,6 +192,7 @@
                                         <button id="submit" name="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
+
                             </fieldset>
                         </form>
                     </div>
@@ -172,14 +203,19 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://use.fontawesome.com/78896d35e2.js"></script>
 
-    <!-- our scripts -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/78896d35e2.js"></script>
+    <script src="js/dataService.js"></script>
     <script src="js/home.js"></script>
-    <script src="dataService.js"></script>
 </body>
 
 </html>

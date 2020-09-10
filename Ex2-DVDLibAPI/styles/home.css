@@ -1,3 +1,11 @@
 #create-search-header {
     display: grid;
 }
+
+#library-container{
+    display: flex;
+}
+
+#dvd-library{
+    width: 90%;
+}
