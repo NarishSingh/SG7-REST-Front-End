@@ -4,6 +4,7 @@
 
 #forecast-row {
     display: none;
+    margin: 15px;
 }
 
 #city-header {
@@ -22,7 +23,5 @@
 }
 
 #5-days-forecast{
-    display: grid;
-    width: 80%;
-    grid-template-columns: repeat(5, 1fr);
+
 }

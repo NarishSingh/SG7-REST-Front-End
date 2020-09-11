@@ -9,10 +9,13 @@ docs/examples: https://openweathermap.org/current
 $(document).ready(function () {
     //Get Weather btn handler
     $(document).on('click', '#get-weather-btn', function (event) {
-        $('#conditions-row').show();
-        $('#forecast-row').show();
+        if (validateZip($('#add-zip-code').val())){
+            clearErrorMsgs();
+            $('#conditions-row').show();
+            $('#forecast-row').show();
 
-        getConditionsWeather();
+            getConditionsWeather();
+        }
     });
 })
 
@@ -91,6 +94,10 @@ function getConditionsWeather() {
     });
 
     /*5 DAY FORECAST*/
+    //clear previous forecast
+
+
+    //get the forecast
     $.ajax({
         type: 'GET',
         url: urlForForecast,
@@ -98,71 +105,69 @@ function getConditionsWeather() {
             clearErrorMsgs();
 
             var date = new Set();
-            var forecastArray = weatherData.list;
+            var forecastArray = [];
             var highTemps = [];
             var lowTemps = [];
             var iconStrings = [];
             var descrpStrings = [];
-            var dateStrings = [];
-            var highest = 0;
-            var lowest = 999;
             var ct = 1;
 
-            $.forEach(forecastArray, function (i, daysWeather) {
+            $.each(weatherData.list, function (i, daysWeather) {
                 //get unique dates
                 date.add(daysWeather.dt_txt.substring(0, 10));
 
-                if (date.size === ct){
+                //dump all data for one date to arrays
+                if (date.size === ct) {
+                    lowTemps.push(daysWeather.main.temp_min);
+                    highTemps.push(daysWeather.main.temp_max);
+                    descrpStrings.push(daysWeather.weather[0].main);
+                    iconStrings.push(daysWeather.weather[0].icon);
+                } else {
+                    //when a new date is added to set, the previous date is complete
+                    //find the data points for that complete day and only then do you push it into array
+                    var forecast = {};
+                    forecast.lowTemp = Math.min.apply(null, lowTemps);
+                    forecast.highTemp = Math.max.apply(null, highTemps);
+                    forecast.icon = mostOccuring(iconStrings);
+                    forecast.description = mostOccuring(descrpStrings);
+                    forecastArray.push(forecast);
 
+                    //clear the temporary arrays and increment counter
+                    lowTemps = [];
+                    highTemps = [];
+                    iconStrings = [];
+                    descrpStrings = [];
+                    ct++;
                 }
-            })
+            });
 
-            /*Day by day info*/
-            /*
-            for (let i = 0; i < 5; i++) {
-                for (let j = 0; j < 8; j++) {
-                    if (forecastArray[(i * 8) + j].main.temp_max > highest) {
-                        highest = forecastArray[(i * 8) + j].main.temp_max;
-                    }
+            //save dates
+            const iter = date[Symbol.iterator]();
+            forecastArray.forEach(day => {
+                var dateString = iter.next().value;
+                day.date = dateString;
+            });
 
-                    if (forecastArray[(i * 8) + j].main.temp_min < lowest) {
-                        lowest = forecastArray[(i * 8) + j].main.temp_min;
-                    }
-
-                    if (forecastArray[(i * 8) + j].dt_txt.substring(11) === "12:00:00") {
-                        //just using 12 noon for now
-                        iconStrings.push(forecastArray[(i * 8) + j].weather[0].icon);
-                        descrpStrings.push(forecastArray[(i * 8) + j].weather[0].description);
-                    }
-                }
-
-                highTemps.push(highest);
-                lowTemps.push(lowest);
-                dateStrings.push(forecastArray[i * 8].dt_txt.substring(0, 10));
-            }
-
-             */
-
-            //FIXME edit based on changes
-            for (let i = 0; i < 5; i++) {
-                var iconUrl = 'http://openweathermap.org/img/w/' + iconStrings[i] + '.png'
+            forecastArray.forEach(day => {
+                var iconUrl = 'http://openweathermap.org/img/w/' + day.icon + '.png'
                 var unit = $('#select-units').val();
                 var hlString;
                 if (unit === "imperial") {
-                    hlString = "H: " + highTemps[i] + "°F L: " + lowTemps[i] + "°F";
+                    hlString = "H: " + day.highTemp + "°F L: " + day.lowTemp + "°F";
                 } else {
-                    hlString = "H: " + highTemps[i] + "°C L: " + lowTemps[i] + "°C";
+                    hlString = "H: " + day.highTemp + "°C L: " + day.lowTemp + "°C";
                 }
 
-                var daysForecastDiv = '<div class="col">' +
-                    '<p>' + dateStrings[i] + '</p>' +
-                    '<img class="img-fluid" src="' + iconUrl + '" alt="Forecast Icon">' +
-                    '<p>' + descrpStrings[i] + '</p>' +
-                    '<p>' + hlString+ '</p>' +
-                    '</div>'
+                //render the div
+                var daysForecastDiv = '<div class="col text-xl-center" ">' +
+                    '<p>' + day.date + '</p>' +
+                    '<img src="' + iconUrl + '" alt="Forecast Icon">' +
+                    '<p>' + day.description + '</p>' +
+                    '<p>' + hlString + '</p>' +
+                    '</div>';
 
-                $('#5-days-forecast').replaceWith(daysForecastDiv);
-            }
+                $('#5-days-forecast').append(daysForecastDiv);
+            });
         },
         error: function () {
             $('#errorMessages')
@@ -178,4 +183,38 @@ function getConditionsWeather() {
  */
 function clearErrorMsgs() {
     $('errorMessages').empty();
+}
+
+/**
+ * Process an array and find the element that occurs the most in an array
+ * @param arr an array
+ * @returns {Object} the mode of an array
+ */
+function mostOccuring(arr) {
+    return arr.sort((a, b) =>
+        arr.filter(v => v === a).length
+        - arr.filter(v => v === b).length
+    ).pop();
+}
+
+/**
+ * Validate a zip code input
+ * @param zipcode {String} must contain 5 digits
+ * @returns {boolean} true if valid regex, false otherwise
+ */
+function validateZip(zipcode) {
+    clearErrorMsgs();
+
+    var acceptable = new RegExp("[0-9]{5}"); //must be 5 digits
+
+    if (acceptable.test(zipcode)) {
+        return true;
+    } else {
+        $('#errorMessages')
+            .append($('<li>'))
+            .attr({class: 'list-group-item list-group-item-danger'})
+            .text("5 digits required. Please re-enter a valid zipcode.");
+
+        return false;
+    }
 }
