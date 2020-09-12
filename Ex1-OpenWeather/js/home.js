@@ -1,16 +1,10 @@
-/*
-server name: api.openweathermap.org
-example url forecast: http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=f29ed23e97e67d948334f9b71c66421d
-docs/examples: https://openweathermap.org/current
- */
 //////////////////////////////////////////////////////////
 // MAIN
 //////////////////////////////////////////////////////////
 $(document).ready(function () {
     //Get Weather btn handler
     $(document).on('click', '#get-weather-btn', function (event) {
-        if (validateZip($('#add-zip-code').val())){
-            clearErrorMsgs();
+        if (validateZip($('#add-zip-code').val())) {
             $('#conditions-row').show();
             $('#forecast-row').show();
 
@@ -22,23 +16,22 @@ $(document).ready(function () {
 //////////////////////////////////////////////////////////
 // METHODS
 //////////////////////////////////////////////////////////
-
 /**
  * Retrieve and render conditions and weather data for a given zip code on click
  */
 function getConditionsWeather() {
     //retrieve zipcode
-    var zip = $('#add-zip-code').val();
+    let zip = $('#add-zip-code').val();
 
     //retrieve unit type
-    var unit = $('#select-units').val();
+    let unit = $('#select-units').val();
 
     //CURRENT Conditions URL
-    var urlForToday = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=' + unit
+    let urlForToday = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&units=' + unit
         + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
     //FORECAST URL
-    var urlForForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=' + unit
+    let urlForForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + zip + ',us&units=' + unit
         + '&APPID=f29ed23e97e67d948334f9b71c66421d';
 
     /*CURRENT WEATHER*/
@@ -50,31 +43,31 @@ function getConditionsWeather() {
 
             /*header*/
             //append city name to #city-header
-            var cityHeaderText = "Current Conditions in " + weatherData.name;
+            let cityHeaderText = "Current Conditions in " + weatherData.name;
             $('#city-header').append('<h1></h1>').text(cityHeaderText);
 
             /*current conditions*/
             //icon
-            var iconId = weatherData.weather[0].icon;
-            var iconSRC = 'http://openweathermap.org/img/w/' + iconId + '.png'
+            let iconId = weatherData.weather[0].icon;
+            let iconSRC = 'http://openweathermap.org/img/w/' + iconId + '.png'
 
             $('#condition-icon').replaceWith('<img src="' + iconSRC + '" class="img-fluid" alt="Current conditions icon">');
 
             //description
-            var descriptionString = weatherData.weather[0].main + ": " + weatherData.weather[0].description;
+            let descriptionString = weatherData.weather[0].main + ": " + weatherData.weather[0].description;
             $('#condition-desc').append('<p class="text-center"></p>').text(descriptionString);
 
             /*stats*/
-            var tempString = "Temperature: " + weatherData.main.temp;
+            let tempString = "Temperature: " + weatherData.main.temp;
             if (unit === "imperial") {
                 tempString += "°F";
             } else {
                 tempString += "°C";
             }
 
-            var humidString = "Humidity: " + weatherData.main.humidity + "%";
+            let humidString = "Humidity: " + weatherData.main.humidity + "%";
 
-            var windString = "Wind: " + weatherData.wind.speed;
+            let windString = "Wind: " + weatherData.wind.speed;
             if (unit === "imperial") {
                 windString += " mph";
             } else {
@@ -94,27 +87,23 @@ function getConditionsWeather() {
     });
 
     /*5 DAY FORECAST*/
-    //clear previous forecast
-
-
-    //get the forecast
     $.ajax({
         type: 'GET',
         url: urlForForecast,
         success: function (weatherData, status) {
             clearErrorMsgs();
+            $('#5-days-forecast').empty();
 
-            var date = new Set();
-            var forecastArray = [];
-            var highTemps = [];
-            var lowTemps = [];
-            var iconStrings = [];
-            var descrpStrings = [];
-            var ct = 1;
+            let date = new Set();
+            let forecastArray = [];
+            let highTemps = [];
+            let lowTemps = [];
+            let iconStrings = [];
+            let descrpStrings = [];
+            let ct = 1;
 
             $.each(weatherData.list, function (i, daysWeather) {
-                //get unique dates
-                date.add(daysWeather.dt_txt.substring(0, 10));
+                date.add(daysWeather.dt_txt.substring(0, 10)); //get unique dates
 
                 //dump all data for one date to arrays
                 if (date.size === ct) {
@@ -125,11 +114,11 @@ function getConditionsWeather() {
                 } else {
                     //when a new date is added to set, the previous date is complete
                     //find the data points for that complete day and only then do you push it into array
-                    var forecast = {};
+                    let forecast = {};
                     forecast.lowTemp = Math.min.apply(null, lowTemps);
                     forecast.highTemp = Math.max.apply(null, highTemps);
-                    forecast.icon = mostOccuring(iconStrings);
-                    forecast.description = mostOccuring(descrpStrings);
+                    forecast.icon = mostOccurring(iconStrings);
+                    forecast.description = mostOccurring(descrpStrings);
                     forecastArray.push(forecast);
 
                     //clear the temporary arrays and increment counter
@@ -144,22 +133,22 @@ function getConditionsWeather() {
             //save dates
             const iter = date[Symbol.iterator]();
             forecastArray.forEach(day => {
-                var dateString = iter.next().value;
+                let dateString = iter.next().value;
                 day.date = dateString;
             });
 
             forecastArray.forEach(day => {
-                var iconUrl = 'http://openweathermap.org/img/w/' + day.icon + '.png'
-                var unit = $('#select-units').val();
-                var hlString;
+                let iconUrl = 'http://openweathermap.org/img/w/' + day.icon + '.png'
+                let unit = $('#select-units').val();
+                let hlString;
                 if (unit === "imperial") {
                     hlString = "H: " + day.highTemp + "°F L: " + day.lowTemp + "°F";
                 } else {
                     hlString = "H: " + day.highTemp + "°C L: " + day.lowTemp + "°C";
                 }
 
-                //render the div
-                var daysForecastDiv = '<div class="col text-xl-center" ">' +
+                //render the divs
+                let daysForecastDiv = '<div class="col text-xl-center" ">' +
                     '<p>' + day.date + '</p>' +
                     '<img src="' + iconUrl + '" alt="Forecast Icon">' +
                     '<p>' + day.description + '</p>' +
@@ -182,7 +171,8 @@ function getConditionsWeather() {
  * Clear out error messages
  */
 function clearErrorMsgs() {
-    $('errorMessages').empty();
+    $('#errorMessages').empty();
+    $('errorMessages').hide();
 }
 
 /**
@@ -190,7 +180,7 @@ function clearErrorMsgs() {
  * @param arr an array
  * @returns {Object} the mode of an array
  */
-function mostOccuring(arr) {
+function mostOccurring(arr) {
     return arr.sort((a, b) =>
         arr.filter(v => v === a).length
         - arr.filter(v => v === b).length
@@ -205,7 +195,7 @@ function mostOccuring(arr) {
 function validateZip(zipcode) {
     clearErrorMsgs();
 
-    var acceptable = new RegExp("[0-9]{5}"); //must be 5 digits
+    let acceptable = new RegExp("[0-9]{5}"); //must be 5 digits
 
     if (acceptable.test(zipcode)) {
         return true;

@@ -1,3 +1,7 @@
+body{
+    background-color: darkgray;
+}
+
 #conditions-row {
     display: none;
 }
@@ -20,8 +24,4 @@
 
 #temp-humidity-wind {
     text-align: center;
-}
-
-#5-days-forecast{
-
 }
