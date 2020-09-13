@@ -10,7 +10,7 @@ $(document).ready(function () {
 
         //create DVD button from modal handler
         $(document).on('click', '#create-dvd-modal-btn', function (e) {
-            alert("yuh"); //TODO debug only
+            createDvdEntry();
         });
     });
 
@@ -61,9 +61,39 @@ function loadLibrary() {
     });
 }
 
+function createDvdEntry() {
+    alert("yuh"); //TODO debug only
+
+    $.ajax({
+        type: 'POST',
+        url: 'https://tsg-dvds.herokuapp.com/dvd/',
+        data: JSON.stringify({
+            title: $('#create-title-input').val(),
+            releaseYear: $('#create-releaseYr-input').val(),
+            director: $('#create-director-input').val(),
+            rating: $('#create-rating-select').val(),
+            notes: $('#create-notes-input').val()
+        }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json',
+        success: function (data, status) {
+            //TODO implement
+            //TODO don't forget to verify the id has been generated
+        },
+        error: function () {
+            $('#errorMessages')
+                .append($('<li>'))
+                .attr({class: 'list-group-item list-group-item-danger'})
+                .text('Error calling web service.');
+        }
+    });
+}
+
 //TODO implement this for tr's -> edit and delete
 function onEditDVD() {
-
 
 }
 
