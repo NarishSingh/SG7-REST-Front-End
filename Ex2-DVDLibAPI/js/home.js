@@ -16,13 +16,29 @@ $(document).ready(function () {
 
     //search DVD button handler
     $(document).on('click', '#search-dvd-input', function () {
-
+        //TODO implement
     });
 });
 
 ////////////////////////////////////////////////////////
 // Methods
 ////////////////////////////////////////////////////////
+/**
+ * Format the HTML element for a dvd entry
+ * @param dvd {Object} containing id, title, release year, director, rating, notes
+ * @returns {string} HTML strings to be appended and rendered
+ */
+function formatDvdEntry(dvd) {
+    return `<tr>
+        <td>${dvd.title}</td>
+        <td>${dvd.releaseYear}</td>
+        <td>${dvd.director}</td>
+        <td>${dvd.rating}</td>
+        <td><a href="#" data-dvdid='${dvd.id}' class='editDvd'><i class="far fa-edit"></i></a></td>
+        <td><a href="#" data-dvdid='${dvd.id}' class='deleteDvd'><i class="far fa-trash-alt"></i></a></td>
+    </tr>`;
+}
+
 /**
  * Load all titles from server via GET and render to table
  */
@@ -32,21 +48,7 @@ function loadLibrary() {
         url: 'https://tsg-dvds.herokuapp.com/dvds/',
         success: function (dvdArr, status) {
             $.each(dvdArr, function (i, dvd) {
-                //extract fields, no need to display id nor notes
-                let title = dvd.title;
-                let releaseYr = dvd.releaseYear;
-                let director = dvd.director;
-                let rating = dvd.rating;
-
-                //render to tr
-                let dvdRow = '<tr>';
-                dvdRow += '<td>' + title + '</td>';
-                dvdRow += '<td>' + releaseYr + '</td>';
-                dvdRow += '<td>' + director + '</td>';
-                dvdRow += '<td>' + rating + '</td>';
-                dvdRow += '<td onclick="onEditDVD()"><i class="far fa-edit"></i></td>'; //edit
-                dvdRow += '<td onclick="onDeleteDVD()"><i class="far fa-trash-alt"></i></td>'; //delete
-
+                let dvdRow = formatDvdEntry(dvd); //render to tr
                 $('#library-entries').append(dvdRow);
             });
         },
