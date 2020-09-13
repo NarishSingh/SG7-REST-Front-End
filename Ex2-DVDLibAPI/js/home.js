@@ -28,10 +28,13 @@ $(document).ready(function () {
     });
 
     //Delete DVD icon handler
-    $(document).on('click', '.deleteDvd', function (e) {
-        if (confirmDelete()){
-            deleteDvdEntry();
-        }
+    $(document).on('click', '.deleteDvd', function () {
+        $('#del-confirm-modal').modal();
+
+        $(document).on('click', '#delete-confirm-btn', function (e) {
+            deleteDvdEntry(e);
+            $('#del-confirm-modal').modal("hide");
+        });
     });
 });
 
@@ -72,6 +75,8 @@ function formatDvdEntry(dvd) {
  * Load all titles from server via GET and render to table
  */
 function loadLibrary() {
+    clearLibraryTable();
+
     $.ajax({
         type: 'GET',
         url: 'https://tsg-dvds.herokuapp.com/dvds/',
@@ -107,7 +112,6 @@ function createDvdEntry() {
         'dataType': 'json',
         success: function (newDvd, status) {
             clearErrorMsgs();
-            clearLibraryTable();
             loadLibrary();
         },
         error: function () {
@@ -124,12 +128,25 @@ function editDvdEntry() {
 
 }
 
-function confirmDelete() {
-    
-}
+/**
+ * DELETE a DVD entry
+ * @param e {Event}
+ */
+function deleteDvdEntry(e) {
+    var dvdId = $(this).data('dvdid'); //FIXME value is coming back undefined
 
-function deleteDvdEntry() {
-    var dvdId = $(this).data('dvdid');
-
-
+    $.ajax({
+        type: 'DELETE',
+        url: 'https://tsg-dvds.herokuapp.com/dvd/' + dvdId,
+        success: function (status) {
+            clearErrorMsgs();
+            loadLibrary();
+        },
+        error: function () {
+            $('#errorMessages')
+                .append($('<li>'))
+                .attr({class: 'list-group-item list-group-item-danger'})
+                .text('Error calling web service.');
+        }
+    });
 }
