@@ -3,13 +3,17 @@
     justify-content: center;
 }
 
-#create-dvd-btn, #search-dvd-input, #search-btn, #search-category-select{
+#create-dvd-btn, #search-dvd-input, #search-btn, #search-category-select {
     margin-right: 25px;
 }
 
 #create-search-header {
     display: flex;
     padding: 15px;
+}
+
+#create-notes-input {
+    resize: none;
 }
 
 #library-container {

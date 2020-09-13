@@ -4,9 +4,14 @@
 $(document).ready(function () {
     loadLibrary();
 
-    //create DVD button handler
+    //create DVD trigger handler
     $(document).on('click', '#create-dvd-btn', function () {
+        $('#create-dvd-modal').modal();
 
+        //create DVD button from modal handler
+        $(document).on('click', '#create-dvd-modal-btn', function (e) {
+            alert("yuh"); //TODO debug only
+        });
     });
 
     //search DVD button handler
@@ -24,7 +29,7 @@ $(document).ready(function () {
 function loadLibrary() {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/dvds',
+        url: 'https://tsg-dvds.herokuapp.com/dvds/',
         success: function (dvdArr, status) {
             $.each(dvdArr, function (i, dvd) {
                 //extract fields, no need to display id nor notes
