@@ -26,7 +26,6 @@ function refreshTable(dvds) {
     }
 }
 
-
 // /////////////////////////////////////////////////////////////////////
 // Page event methods
 function onAddDvdSubmit(e) {
