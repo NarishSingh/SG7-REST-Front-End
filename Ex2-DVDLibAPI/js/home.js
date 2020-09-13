@@ -11,6 +11,14 @@ $(document).ready(function () {
         //create DVD button from modal handler
         $(document).on('click', '#create-dvd-modal-btn', function (e) {
             createDvdEntry();
+
+            //reset and hide
+            $('#create-title-input').val('');
+            $('#create-releaseYr-input').val('');
+            $('#create-director-input').val('');
+            $('#create-rating-select').val("G"); //Default selection
+            $('#create-notes-input').val('');
+            $('#create-dvd-modal').modal("hide");
         });
     });
 
@@ -18,11 +26,32 @@ $(document).ready(function () {
     $(document).on('click', '#search-dvd-input', function () {
         //TODO implement
     });
+
+    //Delete DVD icon handler
+    $(document).on('click', '.deleteDvd', function (e) {
+        if (confirmDelete()){
+            deleteDvdEntry();
+        }
+    });
 });
 
 ////////////////////////////////////////////////////////
 // Methods
 ////////////////////////////////////////////////////////
+/**
+ * Clear out all error messages
+ */
+function clearErrorMsgs() {
+    $('#errorMessages').empty();
+}
+
+/**
+ * Clear out all entries from table to stop duplication
+ */
+function clearLibraryTable() {
+    $('#library-entries').empty();
+}
+
 /**
  * Format the HTML element for a dvd entry
  * @param dvd {Object} containing id, title, release year, director, rating, notes
@@ -48,8 +77,7 @@ function loadLibrary() {
         url: 'https://tsg-dvds.herokuapp.com/dvds/',
         success: function (dvdArr, status) {
             $.each(dvdArr, function (i, dvd) {
-                let dvdRow = formatDvdEntry(dvd); //render to tr
-                $('#library-entries').append(dvdRow);
+                $('#library-entries').append(formatDvdEntry(dvd));
             });
         },
         error: function () {
@@ -62,8 +90,6 @@ function loadLibrary() {
 }
 
 function createDvdEntry() {
-    alert("yuh"); //TODO debug only
-
     $.ajax({
         type: 'POST',
         url: 'https://tsg-dvds.herokuapp.com/dvd/',
@@ -79,9 +105,10 @@ function createDvdEntry() {
             'Content-Type': 'application/json'
         },
         'dataType': 'json',
-        success: function (data, status) {
-            //TODO implement
-            //TODO don't forget to verify the id has been generated
+        success: function (newDvd, status) {
+            clearErrorMsgs();
+            clearLibraryTable();
+            loadLibrary();
         },
         error: function () {
             $('#errorMessages')
@@ -93,10 +120,16 @@ function createDvdEntry() {
 }
 
 //TODO implement this for tr's -> edit and delete
-function onEditDVD() {
+function editDvdEntry() {
 
 }
 
-function onDeleteDVD() {
+function confirmDelete() {
+    
+}
+
+function deleteDvdEntry() {
+    var dvdId = $(this).data('dvdid');
+
 
 }
