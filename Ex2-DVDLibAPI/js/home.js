@@ -137,7 +137,7 @@ function editDvdEntry() {
 function deleteDvdEntry(e) {
     e.preventDefault();
 
-    let dvdId = $(this).data(""); //FIXME value is coming back undefined
+    let dvdId = $(this).data("dvdid"); //FIXME value is coming back undefined
 
     $.ajax({
         type: 'DELETE',
