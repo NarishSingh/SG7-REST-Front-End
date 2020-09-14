@@ -10,15 +10,17 @@ $(document).ready(function () {
 
         //create DVD button from modal handler
         $(document).on('click', '#create-dvd-modal-btn', function (e) {
-            createDvdEntry();
+            if (validateReleaseYearInput($('#create-releaseYr-input').val())){
+                createDvdEntry();
 
-            //reset and hide
-            $('#create-title-input').val('');
-            $('#create-releaseYr-input').val('');
-            $('#create-director-input').val('');
-            $('#create-rating-select').val("G"); //Default selection
-            $('#create-notes-input').val('');
-            $('#create-dvd-modal').modal("hide");
+                //reset and hide
+                $('#create-title-input').val('');
+                $('#create-releaseYr-input').val('');
+                $('#create-director-input').val('');
+                $('#create-rating-select').val("G"); //Default selection
+                $('#create-notes-input').val('');
+                $('#create-dvd-modal').modal("hide");
+            }
         });
     });
 
@@ -32,7 +34,7 @@ $(document).ready(function () {
         $('#del-confirm-modal').modal();
 
         $(document).on('click', '#delete-confirm-btn', function (e) {
-            deleteDvdEntry(e);
+            deleteDvdEntry(e); //FIXME not deleting
             $('#del-confirm-modal').modal("hide");
         });
     });
@@ -66,8 +68,8 @@ function formatDvdEntry(dvd) {
         <td>${dvd.releaseYear}</td>
         <td>${dvd.director}</td>
         <td>${dvd.rating}</td>
-        <td><a href="#" data-dvdid='${dvd.id}' class='editDvd'><i class="far fa-edit"></i></a></td>
-        <td><a href="#" data-dvdid='${dvd.id}' class='deleteDvd'><i class="far fa-trash-alt"></i></a></td>
+        <td><a href="#" data-dvdid='${dvd.id}' class="editDvd"><i class="far fa-edit"></i></a></td>
+        <td><a href="#" data-dvdid='${dvd.id}' class="deleteDvd"><i class="far fa-trash-alt"></i></a></td>
     </tr>`;
 }
 
@@ -133,7 +135,9 @@ function editDvdEntry() {
  * @param e {Event}
  */
 function deleteDvdEntry(e) {
-    var dvdId = $(this).data('dvdid'); //FIXME value is coming back undefined
+    e.preventDefault();
+
+    let dvdId = $(this).data(""); //FIXME value is coming back undefined
 
     $.ajax({
         type: 'DELETE',
@@ -149,4 +153,24 @@ function deleteDvdEntry(e) {
                 .text('Error calling web service.');
         }
     });
+}
+
+/**
+ * Validate a year input for dvd entry creation or editing
+ * @param yearInput {string} a valid year
+ * @returns {boolean} true if param has 4 digits
+ */
+function validateReleaseYearInput(yearInput) {
+    let acceptable = new RegExp("[0-9]{4}");
+
+    if (isNaN(yearInput) || !acceptable.test(yearInput)) {
+        $('#errorMessages')
+            .append($('<li>'))
+            .attr({class: 'list-group-item list-group-item-danger'})
+            .text("4 digits required. Please re-enter a valid release year.");
+
+        return false;
+    } else {
+        return true;
+    }
 }
