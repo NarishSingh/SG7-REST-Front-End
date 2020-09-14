@@ -1,5 +1,9 @@
 h1 {
     text-align: center;
+    padding-top: 10px;
+}
+body{
+    background-color: darkgray;
 }
 
 /*FIXME testing only*/
@@ -13,6 +17,7 @@ h1 {
     grid-template-columns: 2fr 1fr;
 }
 
+/*SCREEN LAYOUTS*/
 /*SM*/
 @media screen and (min-width: 576px) {
     #content-div {
@@ -25,6 +30,12 @@ h1 {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(1, 3fr);
+    }
+
+    #purchase-side-bar{
+        height: 100%;
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
     }
 }
 
@@ -41,6 +52,12 @@ h1 {
         display: grid;
         grid-template-columns: repeat(2, 3fr);
     }
+
+    #purchase-side-bar{
+        height: 100%;
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
+    }
 }
 
 /*LG/XL*/
@@ -55,5 +72,11 @@ h1 {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(3, 3fr);
+    }
+
+    #purchase-side-bar{
+        height: 100%;
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
     }
 }
