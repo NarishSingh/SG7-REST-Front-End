@@ -10,7 +10,7 @@ $(document).ready(function () {
 
         //create DVD button from modal handler
         $(document).on('click', '#create-dvd-modal-btn', function (e) {
-            if (validateReleaseYearInput($('#create-releaseYr-input').val())){
+            if (validateReleaseYearInput($('#create-releaseYr-input').val())) {
                 createDvdEntry();
 
                 //reset and hide
@@ -27,6 +27,15 @@ $(document).ready(function () {
     //search DVD button handler
     $(document).on('click', '#search-dvd-input', function () {
         //TODO implement
+    });
+
+    //Edit DVD icon handle
+    $(document).on('click', '.editdvd', function () {
+        //get dvd from id and pull in original entries
+
+        $('#edit-dvd-modal').modal();
+
+
     });
 
     //Delete DVD icon handler
@@ -118,6 +127,27 @@ function createDvdEntry() {
         success: function (newDvd, status) {
             clearErrorMsgs();
             loadLibrary();
+        },
+        error: function () {
+            $('#errorMessages')
+                .append($('<li>'))
+                .attr({class: 'list-group-item list-group-item-danger'})
+                .text('Error calling web service.');
+        }
+    });
+}
+
+function getDvdById(e) {
+    e.preventDefault();
+
+    let dvdId = $(this).data("dvdid"); //FIXME value is coming back undefined
+
+    return $.ajax({
+        type: 'GET',
+        url: 'https://tsg-dvds.herokuapp.com/dvd/' + dvdId,
+        success: function () {
+            clearErrorMsgs();
+            //TODO is there something else to do here?
         },
         error: function () {
             $('#errorMessages')
