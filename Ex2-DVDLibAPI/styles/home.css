@@ -12,7 +12,7 @@
     padding: 15px;
 }
 
-#create-notes-input {
+#create-notes-input, #edit-notes-input {
     resize: none;
 }
 

@@ -59,7 +59,7 @@ function clearLibraryTable() {
 
 /**
  * Format the HTML element for a dvd entry
- * @param dvd {Object} containing id, title, release year, director, rating, notes
+ * @param dvd {object} containing id, title, release year, director, rating, notes
  * @returns {string} HTML strings to be appended and rendered
  */
 function formatDvdEntry(dvd) {
@@ -96,6 +96,9 @@ function loadLibrary() {
     });
 }
 
+/**
+ * Create a new DVD entry via POST
+ */
 function createDvdEntry() {
     $.ajax({
         type: 'POST',
