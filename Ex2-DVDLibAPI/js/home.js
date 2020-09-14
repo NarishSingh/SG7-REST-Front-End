@@ -32,6 +32,7 @@ $(document).ready(function () {
     //Edit DVD icon handle
     $(document).on('click', '.editdvd', function () {
         //get dvd from id and pull in original entries
+        //TODO implement
 
         $('#edit-dvd-modal').modal();
 
@@ -43,7 +44,7 @@ $(document).ready(function () {
         $('#del-confirm-modal').modal();
 
         $(document).on('click', '#delete-confirm-btn', function (e) {
-            deleteDvdEntry(e); //FIXME not deleting
+            deleteDvdEntry(); //FIXME not deleting
             $('#del-confirm-modal').modal("hide");
         });
     });
@@ -165,11 +166,9 @@ function editDvdEntry() {
 
 /**
  * DELETE a DVD entry
- * @param e {Event}
+ * @param dvdEntry {object}
  */
-function deleteDvdEntry(e) {
-    e.preventDefault();
-
+function deleteDvdEntry(dvdEntry) {
     let dvdId = $(this).data("dvdid"); //FIXME value is coming back undefined
 
     $.ajax({
