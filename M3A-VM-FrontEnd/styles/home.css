@@ -3,8 +3,12 @@ h1 {
     padding-top: 10px;
 }
 
+h3 {
+    margin: 0px;
+}
+
 body {
-    background-color: darkgray;
+    background-color: lightsteelblue;
 }
 
 #content-div {
@@ -12,10 +16,21 @@ body {
     grid-template-columns: 2fr 1fr;
 }
 
-.item-box{
-    justify-content: center;
+/*ITEM GRID*/
+.item-box {
+    text-align: center;
 }
 
+/*PURCHASE SIDEBAR*/
+.form-group {
+    text-align: center;
+}
+
+input {
+    /*FIXME not centering properly*/
+    width: 10%;
+    margin-bottom: 5px;
+}
 
 /*FIXME testing only*/
 /*FIXME <img class="img-fluid" src="styles/test-image.png" alt="testing">*/

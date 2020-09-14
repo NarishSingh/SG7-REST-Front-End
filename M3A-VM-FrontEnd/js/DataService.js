@@ -1,4 +1,4 @@
-let dataService = function () {
+let DataService = function () {
     let self = this;
 
     self.getAllItems = function (callback, errorFunc) {
