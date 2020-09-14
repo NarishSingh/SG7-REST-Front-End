@@ -3,12 +3,14 @@
 // NAMESPACE
 let ds = new DataService();
 let money = 0.0;
+let itemCt = 1;
+let itemGrid = $('#vm-item-grid');
 
 ///////////////////////////////////////////////////
 // Main
 ///////////////////////////////////////////////////
 $(document).ready(function () {
-
+    refreshItems();
 });
 
 ///////////////////////////////////////////////////
@@ -19,15 +21,30 @@ $(document).ready(function () {
  * @param item {object} contains id, name, price, quantity
  */
 function formatItemBox(item) {
+    let itemDiv = `<div class="item-box">
+        <p>` + itemCt + `</p>
+        <p>${item.name}</p>
+        <p>$ ${item.price}</p>
+        <p>Quantity: ${item.quantity}</p>
+    </div>`;
 
+    ct++;
+
+    return itemDiv;
 }
 
 /**
  * Render all items to page
- * @param itemList {Array} all items from db, empty stock inclusive
  */
-function refreshItems(itemList) {
+function refreshItems() { //TODO this originally had an item list...see how it goes
+    itemCt = 1; //restart from beginning
+    itemGrid.empty();
+/*
+    ds.getAllItems(function () {
 
+    },);
+
+ */
 }
 
 /**

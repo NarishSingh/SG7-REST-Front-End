@@ -7,15 +7,20 @@ body {
     background-color: darkgray;
 }
 
+#content-div {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.item-box{
+    justify-content: center;
+}
+
+
 /*FIXME testing only*/
 /*FIXME <img class="img-fluid" src="styles/test-image.png" alt="testing">*/
 .img-fluid {
     width: 100%;
-}
-
-#content-div {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
 }
 
 /*SCREEN LAYOUTS*/
