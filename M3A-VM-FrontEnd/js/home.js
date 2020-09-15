@@ -10,7 +10,7 @@ let itemGrid = $('#vm-item-grid');
 // Main
 ///////////////////////////////////////////////////
 $(document).ready(function () {
-    refreshItems();
+    ds.getAllItems(refreshItems, alertError);
 });
 
 ///////////////////////////////////////////////////
@@ -23,12 +23,12 @@ $(document).ready(function () {
 function formatItemBox(item) {
     let itemDiv = `<div class="item-box">
         <p>` + itemCt + `</p>
-        <p>${item.name}</p>
+        <p class="font-weight-bold">${item.name}</p>
         <p>$ ${item.price}</p>
         <p>Quantity: ${item.quantity}</p>
     </div>`;
 
-    ct++;
+    itemCt++;
 
     return itemDiv;
 }
@@ -36,15 +36,13 @@ function formatItemBox(item) {
 /**
  * Render all items to page
  */
-function refreshItems() { //TODO this originally had an item list...see how it goes
-    itemCt = 1; //restart from beginning
+function refreshItems(itemList) {
+    itemCt = 1;
     itemGrid.empty();
-/*
-    ds.getAllItems(function () {
 
-    },);
-
- */
+    for (let item of itemList) {
+        itemGrid.append(formatItemBox(item));
+    }
 }
 
 /**
@@ -133,4 +131,12 @@ function handleGetItemsError(error) {
  */
 function handleVendItemsError(error) {
 
+}
+
+/**
+ * Create an alert out of JSON response
+ * @param msg {string} http status from JSON
+ */
+function alertError(msg) {
+    alert(msg.responseJSON.message);
 }
