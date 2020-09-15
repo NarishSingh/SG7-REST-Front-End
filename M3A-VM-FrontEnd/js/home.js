@@ -8,14 +8,15 @@ let itemGrid = $('#vm-item-grid');
 
 /*MAIN*/
 $(document).ready(function () {
-    //FIXME alert error needs to be replaced w writing to the middle box
-    ds.getAllItems(refreshItems, alertError);
+    ds.getAllItems(refreshItems, updateMsg);
 
-    /*MONEY EVENT HANDLERS*/
+    /*MONEY CLICK EVENT HANDLERS*/
     $(document).on('click', '#add-dollar-btn', onAddDollarClicked);
     $(document).on('click', '#add-quarter-btn', onAddQuarterClicked);
     $(document).on('click', '#add-dime-btn', onAddDimeClicked);
     $(document).on('click', '#add-nickel-btn', onAddNickelClicked);
+
+    /*PURCHASE EVENT HANDLERS*/
 
 });
 
@@ -59,6 +60,7 @@ function updateMoney(money) {
     let moneyString = '$' + money.toFixed(2);
 
     $('#money-in').val(moneyString);
+
 }
 
 /**
@@ -66,7 +68,7 @@ function updateMoney(money) {
  * @param msg {string} messages concerning items, change, or purchase success
  */
 function updateMsg(msg) {
-
+    $('#purchase-feedback').val(msg);
 }
 
 /**
@@ -83,6 +85,7 @@ function updateChange(change) {
  */
 function onAddDollarClicked(e) {
     updateMoney((money += 1.00));
+    updateMsg("Dollar added");
 }
 
 /**
@@ -91,6 +94,7 @@ function onAddDollarClicked(e) {
  */
 function onAddQuarterClicked(e) {
     updateMoney((money += 0.25));
+    updateMsg("Quarter added");
 }
 
 /**
@@ -99,6 +103,7 @@ function onAddQuarterClicked(e) {
  */
 function onAddDimeClicked(e) {
     updateMoney((money += 0.10));
+    updateMsg("Dime added");
 }
 
 /**
@@ -107,6 +112,7 @@ function onAddDimeClicked(e) {
  */
 function onAddNickelClicked(e) {
     updateMoney((money += 0.05));
+    updateMsg("Nickle added");
 }
 
 /**
@@ -115,6 +121,7 @@ function onAddNickelClicked(e) {
  */
 function onAddPennyClicked(e) {
     updateMoney((money += 0.01)); //TODO this isn't in the instructions nor wireframe
+    updateMsg("Penny added");
 }
 
 /**
@@ -154,5 +161,5 @@ function handleVendItemsError(error) {
  * @param msg {string} http status from JSON
  */
 function alertError(msg) {
-    alert(msg.responseJSON.message); //FIXME remove after proper error rendering
+    alert(msg.responseJSON.message); //debug only
 }
