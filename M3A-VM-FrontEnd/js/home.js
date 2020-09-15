@@ -17,7 +17,7 @@ $(document).ready(function () {
     $(document).on('click', '#add-nickel-btn', onAddNickelClicked);
 
     /*PURCHASE EVENT HANDLERS*/
-    $(document).on('click', '.itemBox', onItemBoxClicked);
+    $(document).on('click', '.item-box', onItemBoxClicked);
 });
 
 /*METHODS*/
