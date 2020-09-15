@@ -21,6 +21,7 @@ $(document).ready(function () {
 });
 
 /*METHODS*/
+
 /*Rendering*/
 /**
  * Format an item from db into HTML for rendering
@@ -29,10 +30,14 @@ $(document).ready(function () {
 function formatItemBox(item) {
     item.currentItemCount = itemCt; //save item count to item
 
+    //format price
+    let itemPrice = parseFloat(item.price);
+    let itemPriceString = "$" + itemPrice.toFixed(2);
+
     let itemDiv = `<div class="item-box" data-itemct='${item.currentItemCount}'>
         <p>` + itemCt + `</p>
         <p class="font-weight-bold">${item.name}</p>
-        <p>$${item.price}</p>
+        <p>` + itemPriceString + `</p>
         <p>Quantity: ${item.quantity}</p>
     </div>`;
 
@@ -73,6 +78,10 @@ function updateMsg(msg) {
     $('#purchase-feedback').val(msg);
 }
 
+/**
+ * Render the temp item count for UI
+ * @param currentItemCount {string} temp item count from clicked on item
+ */
 function updateItemSelected(currentItemCount) {
     $('#item-to-buy').val(currentItemCount);
 }
