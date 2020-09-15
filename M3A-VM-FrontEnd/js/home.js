@@ -35,6 +35,7 @@ function formatItemBox(item) {
 
 /**
  * Render all items to page
+ * @param itemList {Array} array from the API response
  */
 function refreshItems(itemList) {
     itemCt = 1;
