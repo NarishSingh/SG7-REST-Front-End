@@ -5,6 +5,7 @@ let ds = new DataService();
 let money = 0.0;
 let itemCt = 1;
 let itemGrid = $('#vm-item-grid');
+let itemSelected;
 
 /*MAIN*/
 $(document).ready(function () {
@@ -18,6 +19,8 @@ $(document).ready(function () {
 
     /*PURCHASE EVENT HANDLERS*/
     $(document).on('click', '.item-box', onItemBoxClicked);
+
+    $(document).on('click', '#change-return-btn', onChangeReturnClicked);
 });
 
 /*METHODS*/
@@ -34,7 +37,7 @@ function formatItemBox(item) {
     let itemPrice = parseFloat(item.price);
     let itemPriceString = "$" + itemPrice.toFixed(2);
 
-    let itemDiv = `<div class="item-box" data-itemct='${item.currentItemCount}'>
+    let itemDiv = `<div class="item-box" data-itemct='${item.currentItemCount}' data-itemname='${item.name}'>
         <p>` + itemCt + `</p>
         <p class="font-weight-bold">${item.name}</p>
         <p>` + itemPriceString + `</p>
@@ -80,10 +83,10 @@ function updateMsg(msg) {
 
 /**
  * Render the temp item count for UI
- * @param currentItemCount {string} temp item count from clicked on item
+ * @param itemDescp {string} temp item count from clicked on item
  */
-function updateItemSelected(currentItemCount) {
-    $('#item-to-buy').val(currentItemCount);
+function updateItemSelected(itemDescp) {
+    $('#item-to-buy').val(itemDescp);
 }
 
 /**
@@ -146,7 +149,10 @@ function onAddPennyClicked(e) {
  */
 function onItemBoxClicked(e) {
     let itemCt = $(this).data('itemct');
-    updateItemSelected(itemCt);
+    let itemName = $(this).data('itemname');
+    let itemString = itemCt + " - " + itemName;
+
+    updateItemSelected(itemString);
 }
 
 /**
@@ -162,7 +168,11 @@ function onPurchaseItemClicked(e) {
  * @param e {event} button click
  */
 function onChangeReturnClicked(e) {
-
+    money = 0;
+    updateMoney(money);
+    $('#purchase-feedback').val('');
+    $('#item-to-buy').val('');
+    $('#change-coins').val('');
 }
 
 /*Errors*/
@@ -170,15 +180,15 @@ function onChangeReturnClicked(e) {
  * Error handler - for attempting to purchase out of stock items
  * @param error {error} 422 Unprocessable Entity from API
  */
-function handleGetItemsError(error) {
+function handleOutOfStockError(error) {
 
 }
 
 /**
- * Error handler - for attempting to purchase a invalid item, or valid item with short change
+ * Error handler - for attempting to purchase a valid item with short change
  * @param error {error} 422 Unprocessable Entity from API
  */
-function handleVendItemsError(error) {
+function handleShortChangeError(error) {
 
 }
 

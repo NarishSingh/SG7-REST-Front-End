@@ -44,8 +44,7 @@ input {
     margin-right: 5px;
 }
 
-/*FIXME testing only*/
-/*FIXME <img class="img-fluid" src="styles/test-image.png" alt="testing">*/
+/*FIXME testing only <img class="img-fluid" src="styles/test-image.png" alt="testing">*/
 .img-fluid {
     width: 100%;
 }
@@ -63,7 +62,7 @@ input {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(1, 3fr);
-        overflow-y: scroll;
+        /*overflow-y: scroll;*/
     }
 
     #purchase-side-bar {
@@ -84,7 +83,7 @@ input {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(2, 3fr);
-        overflow-y: scroll;
+        /*overflow-y: scroll;*/
     }
 
     #purchase-side-bar {
@@ -105,7 +104,7 @@ input {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(3, 3fr);
-        overflow-y: scroll;
+        /*overflow-y: scroll;*/
     }
 
     #purchase-side-bar {
