@@ -19,7 +19,7 @@ body {
 /*ITEM GRID*/
 .item-box {
     text-align: center;
-    border: double;
+    border: double #1b6d85;
 }
 
 /*PURCHASE SIDEBAR*/
@@ -29,6 +29,11 @@ body {
 
 input {
     margin-bottom: 10px;
+}
+
+#purchase-side-bar{
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 /*FIXME testing only*/

@@ -1,21 +1,17 @@
 /*http://tsg-vending.herokuapp.com/*/
 
-// NAMESPACE
+/*NAMESPACE*/
 let ds = new DataService();
 let money = 0.0;
 let itemCt = 1;
 let itemGrid = $('#vm-item-grid');
 
-///////////////////////////////////////////////////
-// Main
-///////////////////////////////////////////////////
+/*MAIN*/
 $(document).ready(function () {
     ds.getAllItems(refreshItems, alertError);
 });
 
-///////////////////////////////////////////////////
-// Methods
-///////////////////////////////////////////////////
+/*METHODS*/
 /**
  * Format an item from db into HTML for rendering
  * @param item {object} contains id, name, price, quantity
