@@ -10,7 +10,7 @@ let DataService = function () {
         });
     };
 
-    self.vendItem = function (callback, errorFunc, moneyInput, itemId) {
+    self.vendItem = function (moneyInput, itemId, callback, errorFunc) {
         $.ajax({
             type: 'POST',
             url: 'http://tsg-vending.herokuapp.com/money/' + moneyInput + '/item/' + itemId,

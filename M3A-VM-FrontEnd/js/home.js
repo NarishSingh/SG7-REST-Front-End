@@ -17,19 +17,22 @@ $(document).ready(function () {
     $(document).on('click', '#add-nickel-btn', onAddNickelClicked);
 
     /*PURCHASE EVENT HANDLERS*/
-
+    $(document).on('click', '.itemBox', onItemBoxClicked);
 });
 
 /*METHODS*/
+/*Rendering*/
 /**
  * Format an item from db into HTML for rendering
  * @param item {object} contains id, name, price, quantity
  */
 function formatItemBox(item) {
-    let itemDiv = `<div class="item-box">
+    item.currentItemCount = itemCt; //save item count to item
+
+    let itemDiv = `<div class="item-box" data-itemct='${item.currentItemCount}'>
         <p>` + itemCt + `</p>
         <p class="font-weight-bold">${item.name}</p>
-        <p>$ ${item.price}</p>
+        <p>$${item.price}</p>
         <p>Quantity: ${item.quantity}</p>
     </div>`;
 
@@ -60,7 +63,6 @@ function updateMoney(money) {
     let moneyString = '$' + money.toFixed(2);
 
     $('#money-in').val(moneyString);
-
 }
 
 /**
@@ -71,6 +73,10 @@ function updateMsg(msg) {
     $('#purchase-feedback').val(msg);
 }
 
+function updateItemSelected(currentItemCount) {
+    $('#item-to-buy').val(currentItemCount);
+}
+
 /**
  * Render coin return to user
  * @param change {string} containing all change to be returned to user post-purchase
@@ -79,6 +85,7 @@ function updateChange(change) {
 
 }
 
+/*Handlers*/
 /**
  * Event handler - add a dollar to money
  * @param e {event} button click
@@ -120,8 +127,17 @@ function onAddNickelClicked(e) {
  * @param e {event} button click
  */
 function onAddPennyClicked(e) {
-    updateMoney((money += 0.01)); //TODO this isn't in the instructions nor wireframe
+    updateMoney((money += 0.01));
     updateMsg("Penny added");
+}
+
+/**
+ * Event handler - select an item by clicking item box
+ * @param e {event} button click
+ */
+function onItemBoxClicked(e) {
+    let itemCt = $(this).data('itemct');
+    updateItemSelected(itemCt);
 }
 
 /**
@@ -140,6 +156,7 @@ function onChangeReturnClicked(e) {
 
 }
 
+/*Errors*/
 /**
  * Error handler - for attempting to purchase out of stock items
  * @param error {error} 422 Unprocessable Entity from API
