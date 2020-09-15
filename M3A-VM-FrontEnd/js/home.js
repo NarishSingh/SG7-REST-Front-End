@@ -8,7 +8,15 @@ let itemGrid = $('#vm-item-grid');
 
 /*MAIN*/
 $(document).ready(function () {
+    //FIXME alert error needs to be replaced w writing to the middle box
     ds.getAllItems(refreshItems, alertError);
+
+    /*MONEY EVENT HANDLERS*/
+    $(document).on('click', '#add-dollar-btn', onAddDollarClicked);
+    $(document).on('click', '#add-quarter-btn', onAddQuarterClicked);
+    $(document).on('click', '#add-dime-btn', onAddDimeClicked);
+    $(document).on('click', '#add-nickel-btn', onAddNickelClicked);
+
 });
 
 /*METHODS*/
@@ -34,6 +42,7 @@ function formatItemBox(item) {
  * @param itemList {Array} array from the API response
  */
 function refreshItems(itemList) {
+    //restart counter and clear grid
     itemCt = 1;
     itemGrid.empty();
 
@@ -44,10 +53,12 @@ function refreshItems(itemList) {
 
 /**
  * Add money to machine pre-purchase
- * @param money {float} dollars and cents
+ * @param money {number} dollars and cents
  */
 function updateMoney(money) {
+    let moneyString = '$' + money.toFixed(2);
 
+    $('#money-in').val(moneyString);
 }
 
 /**
@@ -67,11 +78,19 @@ function updateChange(change) {
 }
 
 /**
+ * Event handler - add a dollar to money
+ * @param e {event} button click
+ */
+function onAddDollarClicked(e) {
+    updateMoney((money += 1.00));
+}
+
+/**
  * Event handler - add a quarter to money
  * @param e {event} button click
  */
 function onAddQuarterClicked(e) {
-
+    updateMoney((money += 0.25));
 }
 
 /**
@@ -79,7 +98,7 @@ function onAddQuarterClicked(e) {
  * @param e {event} button click
  */
 function onAddDimeClicked(e) {
-
+    updateMoney((money += 0.10));
 }
 
 /**
@@ -87,7 +106,7 @@ function onAddDimeClicked(e) {
  * @param e {event} button click
  */
 function onAddNickelClicked(e) {
-
+    updateMoney((money += 0.05));
 }
 
 /**
@@ -95,7 +114,7 @@ function onAddNickelClicked(e) {
  * @param e {event} button click
  */
 function onAddPennyClicked(e) {
-
+    updateMoney((money += 0.01)); //TODO this isn't in the instructions nor wireframe
 }
 
 /**
@@ -135,5 +154,5 @@ function handleVendItemsError(error) {
  * @param msg {string} http status from JSON
  */
 function alertError(msg) {
-    alert(msg.responseJSON.message);
+    alert(msg.responseJSON.message); //FIXME remove after proper error rendering
 }
