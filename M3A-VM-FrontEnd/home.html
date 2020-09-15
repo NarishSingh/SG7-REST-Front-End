@@ -19,47 +19,51 @@
     <div class="container-fluid" id="content-div">
         <div id="vm-item-grid"></div>
 
-        <div id="purchase-side-bar">
-            <form>
-                <div class="form-group" id="money-form">
-                    <h3>Total $ In</h3>
+        <div id="vm-purchase-grid">
+            <div id="purchase-side-bar">
+                <form>
+                    <div class="form-group" id="money-form">
+                        <h3>Total $ In</h3>
 
-                    <label for="money-in"></label>
-                    <input type="text" class="form-control" id="money-in" placeholder="$0.00" readonly>
+                        <label for="money-in"></label>
+                        <input type="text" class="form-control" id="money-in" placeholder="$0.00" readonly>
 
-                    <div class="btn-group" role="group" aria-label="add-money" id="add-money-btn-group">
-                        <button type="button" class="btn btn-outline-success" id="add-dollar-btn">Add Dollar</button>
-                        <button type="button" class="btn btn-outline-secondary" id="add-quarter-btn">Add Quarter
-                        </button>
-                        <button type="button" class="btn btn-outline-danger" id="add-dime-btn">Add Dime</button>
-                        <button type="button" class="btn btn-outline-primary" id="add-nickel-btn">Add Nickel</button>
+                        <div class="btn-group" role="group" aria-label="add-money" id="add-money-btn-group">
+                            <button type="button" class="btn btn-outline-success" id="add-dollar-btn">Add Dollar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="add-quarter-btn">Add Quarter
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" id="add-dime-btn">Add Dime</button>
+                            <button type="button" class="btn btn-outline-primary" id="add-nickel-btn">Add Nickel
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <hr/>
-            </form>
+                    <hr/>
+                </form>
 
-            <form>
-                <div class="form-group" id="purchase-form">
-                    <h3>Messages</h3>
+                <form>
+                    <div class="form-group" id="purchase-form">
+                        <h3>Messages</h3>
 
-                    <label for="item-to-buy" class="col-form-label">Item:</label>
-                    <input type="text" class="form-control" id="item-to-buy" readonly>
+                        <label for="item-to-buy" class="col-form-label">Item:</label>
+                        <input type="text" class="form-control" id="item-to-buy" readonly>
 
-                    <button type="button" class="btn btn-success" id="purchase-btn">Purchase</button>
-                </div>
-                <hr/>
-            </form>
+                        <button type="button" class="btn btn-success" id="purchase-btn">Purchase</button>
+                    </div>
+                    <hr/>
+                </form>
 
-            <form>
-                <div class="form-group" id="change-form">
-                    <h3>Change</h3>
+                <form>
+                    <div class="form-group" id="change-form">
+                        <h3>Change</h3>
 
-                    <label for="change-coins"></label>
-                    <input type="text" class="form-control" id="change-coins" readonly>
+                        <label for="change-coins"></label>
+                        <input type="text" class="form-control" id="change-coins" readonly>
 
-                    <button type="button" class="btn btn-danger" id="change-return-btn">Change Return</button>
-                </div>
-            </form>
+                        <button type="button" class="btn btn-danger" id="change-return-btn">Change Return</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
