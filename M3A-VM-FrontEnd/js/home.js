@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     /*PURCHASE EVENT HANDLERS*/
     $(document).on('click', '.item-box', onItemBoxClicked);
-
+    $(document).on('click', '#purchase-btn', onPurchaseItemClicked);
     $(document).on('click', '#change-return-btn', onChangeReturnClicked);
 });
 
