@@ -59,8 +59,6 @@ function formatItemBox(item) {
  */
 function refreshItems(itemList) {
     itemCt = 1;
-    itemSelected = null;
-    itemPrice = null;
     $('#vm-item-grid').empty();
 
     for (let item of itemList) {
@@ -242,6 +240,8 @@ function onPurchaseItemClicked(e) {
 
             //clear and refresh
             money = 0.00;
+            itemSelected = null;
+            itemPrice = null;
             updateMoney(money);
             updateMsg("Thank you!!!");
             ds.getAllItems(refreshItems, updateMsg);
