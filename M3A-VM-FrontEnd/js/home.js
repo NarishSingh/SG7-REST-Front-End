@@ -39,6 +39,7 @@ function formatItemBox(item) {
     let itemPrice = parseFloat(item.price);
     let itemPriceString = "$" + itemPrice.toFixed(2);
 
+    //div
     let itemDiv =
         `<div class="item-box" 
             data-itemct='${item.currentItemCount}' data-itemname='${item.name}' data-itemid='${item.id}' 

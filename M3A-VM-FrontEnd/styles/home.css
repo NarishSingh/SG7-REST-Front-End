@@ -44,6 +44,19 @@ input {
     margin-right: 5px;
 }
 
+.form-inline {
+    justify-content: space-evenly;
+}
+
+.col-form-label {
+    font-weight: bold;
+    font-style: italic;
+}
+
+#item-to-buy {
+    width: 75%;
+}
+
 /*SCREEN LAYOUTS*/
 /*SM*/
 @media screen and (min-width: 576px) {
