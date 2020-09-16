@@ -57,7 +57,6 @@ input {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(1, 3fr);
-        /*overflow-y: scroll;*/
     }
 
     #purchase-side-bar {
@@ -78,7 +77,6 @@ input {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(2, 3fr);
-        /*overflow-y: scroll;*/
     }
 
     #purchase-side-bar {
@@ -99,7 +97,6 @@ input {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(3, 3fr);
-        /*overflow-y: scroll;*/
     }
 
     #purchase-side-bar {
