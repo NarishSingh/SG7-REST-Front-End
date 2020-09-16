@@ -58,7 +58,6 @@ function formatItemBox(item) {
  * @param itemList {Array} array from the API response
  */
 function refreshItems(itemList) {
-    //restart counter and clear grid
     itemCt = 1;
     itemSelected = null;
     itemPrice = null;
