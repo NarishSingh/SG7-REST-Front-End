@@ -1,8 +1,6 @@
-/*http://tsg-vending.herokuapp.com/*/
-
 /*NAMESPACE*/
 let ds = new DataService();
-let money = 0.0;
+let money = 0.00;
 let itemCt = 1;
 //purchase specific vars
 let itemSelected = null;
@@ -200,9 +198,11 @@ function onItemBoxClicked(e) {
  */
 function onPurchaseItemClicked(e) {
     if (itemSelected === null) {
-        updateMsg("Please select an item from the left.");
+        updateMsg("Please make a selection");
     } else {
-        ds.vendItem(money.toFixed(2), itemSelected, function (changeData, status) {
+        let moneyFormatted = money.toFixed(2);
+
+        ds.vendItem(moneyFormatted, itemSelected, function (changeData, status) {
             //show change back
             let q = changeData.quarters;
             let d = changeData.dimes;
@@ -248,12 +248,13 @@ function onPurchaseItemClicked(e) {
             ds.getAllItems(refreshItems, updateMsg);
         }, function (jqXHR, textStatus, errorThrown) {
             updateMsg(jqXHR.responseJSON.message);
+            ds.getAllItems(refreshItems, updateMsg);
         });
     }
 }
 
 /**
- * Event handler - clear all feedback on screen and money in machine
+ * Event handler - clear all feedback on screen and return to initial state
  * @param e {event} button click
  */
 function onChangeReturnClicked(e) {

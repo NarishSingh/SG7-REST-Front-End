@@ -17,7 +17,7 @@ let DataService = function () {
 
     /**
      * Attempt to vend a purchased item from server via POST
-     * @param moneyInput {number} a cash amount, to 2 precision
+     * @param moneyInput {string} a cash amount, formatted to 2 precision
      * @param itemId {number} an item's id from server
      * @param callback {function} to vend an purchase item and refresh table on page
      * @param errorFunc {function} to render error message on page
