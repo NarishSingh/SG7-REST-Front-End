@@ -3,9 +3,11 @@
 /*NAMESPACE*/
 let ds = new DataService();
 let money = 0.0;
+let itemsGrid = $('#vm-item-grid');
 let itemCt = 1;
-let itemGrid = $('#vm-item-grid');
-let itemSelected;
+//purchase specific vars
+let itemSelected = null;
+let itemPrice = null;
 
 /*MAIN*/
 $(document).ready(function () {
@@ -28,7 +30,7 @@ $(document).ready(function () {
 /*Rendering*/
 /**
  * Format an item from db into HTML for rendering
- * @param item {object} contains id, name, price, quantity
+ * @param item {*} contains id, name, price, quantity
  */
 function formatItemBox(item) {
     item.currentItemCount = itemCt; //save item count to item
@@ -37,7 +39,10 @@ function formatItemBox(item) {
     let itemPrice = parseFloat(item.price);
     let itemPriceString = "$" + itemPrice.toFixed(2);
 
-    let itemDiv = `<div class="item-box" data-itemct='${item.currentItemCount}' data-itemname='${item.name}'>
+    let itemDiv =
+        `<div class="item-box" 
+            data-itemct='${item.currentItemCount}' data-itemname='${item.name}' data-itemid='${item.id}' 
+            data-itemprice='${item.price}'>
         <p>` + itemCt + `</p>
         <p class="font-weight-bold">${item.name}</p>
         <p>` + itemPriceString + `</p>
@@ -56,10 +61,10 @@ function formatItemBox(item) {
 function refreshItems(itemList) {
     //restart counter and clear grid
     itemCt = 1;
-    itemGrid.empty();
+    itemsGrid.empty();
 
     for (let item of itemList) {
-        itemGrid.append(formatItemBox(item));
+        itemsGrid.append(formatItemBox(item));
     }
 }
 
@@ -83,10 +88,10 @@ function updateMsg(msg) {
 
 /**
  * Render the temp item count for UI
- * @param itemDescp {string} temp item count from clicked on item
+ * @param itemDescrp {string} temp item count from clicked on item
  */
-function updateItemSelected(itemDescp) {
-    $('#item-to-buy').val(itemDescp);
+function updateItemSelected(itemDescrp) {
+    $('#item-to-buy').val(itemDescrp);
 }
 
 /**
@@ -94,7 +99,31 @@ function updateItemSelected(itemDescp) {
  * @param change {string} containing all change to be returned to user post-purchase
  */
 function updateChange(change) {
+    $('change-coins').val(change);
+}
 
+/**
+ * Turn coins into a string
+ * @param numCoin {number} number of coins of that type
+ * @param coinString {string} type of coin
+ * @returns {string} a string representation of the change
+ */
+function stringifyChange(numCoin, coinString) {
+    let changeString = "";
+
+    if (numCoin > 0) {
+        if (numCoin === 1) {
+            changeString += numCoin + " " + coinString;
+        } else {
+            if (coinString === "Penny") {
+                changeString += numCoin + " Pennies";
+            } else {
+                changeString += numCoin + " " + coinString + "s";
+            }
+        }
+    }
+
+    return changeString;
 }
 
 /*Handlers*/
@@ -104,7 +133,7 @@ function updateChange(change) {
  */
 function onAddDollarClicked(e) {
     updateMoney((money += 1.00));
-    updateMsg("Dollar added");
+    updateMsg("Dollar Added");
 }
 
 /**
@@ -113,7 +142,7 @@ function onAddDollarClicked(e) {
  */
 function onAddQuarterClicked(e) {
     updateMoney((money += 0.25));
-    updateMsg("Quarter added");
+    updateMsg("Quarter Added");
 }
 
 /**
@@ -122,7 +151,7 @@ function onAddQuarterClicked(e) {
  */
 function onAddDimeClicked(e) {
     updateMoney((money += 0.10));
-    updateMsg("Dime added");
+    updateMsg("Dime Added");
 }
 
 /**
@@ -131,7 +160,7 @@ function onAddDimeClicked(e) {
  */
 function onAddNickelClicked(e) {
     updateMoney((money += 0.05));
-    updateMsg("Nickle added");
+    updateMsg("Nickle Added");
 }
 
 /**
@@ -140,7 +169,7 @@ function onAddNickelClicked(e) {
  */
 function onAddPennyClicked(e) {
     updateMoney((money += 0.01));
-    updateMsg("Penny added");
+    updateMsg("Penny Added");
 }
 
 /**
@@ -148,9 +177,15 @@ function onAddPennyClicked(e) {
  * @param e {event} button click
  */
 function onItemBoxClicked(e) {
+    updateMsg("");
+
     let itemCt = $(this).data('itemct');
     let itemName = $(this).data('itemname');
     let itemString = itemCt + " - " + itemName;
+
+    //save info for purchase
+    itemSelected = $(this).data('itemid');
+    itemPrice = $(this).data('itemprice');
 
     updateItemSelected(itemString);
 }
@@ -160,7 +195,59 @@ function onItemBoxClicked(e) {
  * @param e {event} button click
  */
 function onPurchaseItemClicked(e) {
+    if (itemSelected === null) {
+        updateMsg("Please select an item from the left.");
+    } else {
+        ds.vendItem(money.toFixed(2), itemSelected, function (changeData, status) {
+            //show change back
+            let q = changeData.quarters;
+            let d = changeData.dimes;
+            let n = changeData.nickels;
+            let p = changeData.pennies;
 
+            let changeString = "";
+
+            if (q > 0) {
+                changeString += stringifyChange(q, "Quarter");
+            }
+
+            if (d > 0) {
+                if (q > 0) {
+                    changeString += " ";
+                }
+
+                changeString += stringifyChange(d, "Dime");
+            }
+
+            if (n > 0) {
+                if (q > 0) {
+                    changeString += " ";
+                }
+
+                changeString += stringifyChange(n, "Nickel");
+            }
+
+            if (p > 0) {
+                if (q > 0) {
+                    changeString += " ";
+                }
+
+                changeString += stringifyChange(p, "Penny");
+            }
+
+            $('#change-coins').val(changeString);
+
+            //clear and deselect
+            money = 0.00;
+            updateMoney(money);
+            itemSelected = null;
+            itemPrice = null;
+            updateMsg("Thank you!!!");
+            ds.getAllItems(refreshItems, updateMsg);
+        }, function (jqXHR, textStatus, errorThrown) {
+            updateMsg(jqXHR.responseJSON.message);
+        });
+    }
 }
 
 /**
@@ -168,7 +255,10 @@ function onPurchaseItemClicked(e) {
  * @param e {event} button click
  */
 function onChangeReturnClicked(e) {
-    money = 0;
+    money = 0.00;
+    itemSelected = null;
+    itemPrice = null;
+
     updateMoney(money);
     $('#purchase-feedback').val('');
     $('#item-to-buy').val('');
@@ -176,12 +266,14 @@ function onChangeReturnClicked(e) {
 }
 
 /*Errors*/
+
+//FIXME I don't think I even need these...
 /**
  * Error handler - for attempting to purchase out of stock items
  * @param error {error} 422 Unprocessable Entity from API
  */
 function handleOutOfStockError(error) {
-
+    $('#purchase-feedback').val(error.responseJSON.message);
 }
 
 /**
@@ -189,7 +281,7 @@ function handleOutOfStockError(error) {
  * @param error {error} 422 Unprocessable Entity from API
  */
 function handleShortChangeError(error) {
-
+    $('#purchase-feedback').val(error.responseJSON.message);
 }
 
 /**
