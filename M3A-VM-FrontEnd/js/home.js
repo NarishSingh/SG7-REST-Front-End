@@ -266,8 +266,7 @@ function onChangeReturnClicked(e) {
     $('#change-coins').val('');
 }
 
-/*Errors*/
-//FIXME I don't think I even need these...
+/*Errors - FIXME I don't think I even need these */
 /**
  * Error handler - for attempting to purchase out of stock items
  * @param error {error} 422 Unprocessable Entity from API

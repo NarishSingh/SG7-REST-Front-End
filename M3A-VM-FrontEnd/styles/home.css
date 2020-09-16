@@ -44,11 +44,6 @@ input {
     margin-right: 5px;
 }
 
-/*FIXME testing only <img class="img-fluid" src="styles/test-image.png" alt="testing">*/
-.img-fluid {
-    width: 100%;
-}
-
 /*SCREEN LAYOUTS*/
 /*SM*/
 @media screen and (min-width: 576px) {
