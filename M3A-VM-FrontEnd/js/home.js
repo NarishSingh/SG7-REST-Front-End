@@ -99,7 +99,7 @@ function updateItemSelected(itemDescrp) {
  * @param change {string} containing all change to be returned to user post-purchase
  */
 function updateChange(change) {
-    $('change-coins').val(change);
+    $('#change-coins').val(change);
 }
 
 /**
@@ -178,6 +178,7 @@ function onAddPennyClicked(e) {
  */
 function onItemBoxClicked(e) {
     updateMsg("");
+    updateChange("");
 
     let itemCt = $(this).data('itemct');
     let itemName = $(this).data('itemname');
@@ -220,7 +221,7 @@ function onPurchaseItemClicked(e) {
             }
 
             if (n > 0) {
-                if (q > 0) {
+                if (q || d > 0) {
                     changeString += " ";
                 }
 
@@ -228,14 +229,14 @@ function onPurchaseItemClicked(e) {
             }
 
             if (p > 0) {
-                if (q > 0) {
+                if (q || d || n > 0) {
                     changeString += " ";
                 }
 
                 changeString += stringifyChange(p, "Penny");
             }
 
-            $('#change-coins').val(changeString);
+            updateChange(changeString);
 
             //clear and deselect
             money = 0.00;
@@ -266,7 +267,6 @@ function onChangeReturnClicked(e) {
 }
 
 /*Errors*/
-
 //FIXME I don't think I even need these...
 /**
  * Error handler - for attempting to purchase out of stock items
