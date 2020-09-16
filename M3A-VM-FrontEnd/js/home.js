@@ -3,7 +3,6 @@
 /*NAMESPACE*/
 let ds = new DataService();
 let money = 0.0;
-let itemsGrid = $('#vm-item-grid');
 let itemCt = 1;
 //purchase specific vars
 let itemSelected = null;
@@ -18,6 +17,7 @@ $(document).ready(function () {
     $(document).on('click', '#add-quarter-btn', onAddQuarterClicked);
     $(document).on('click', '#add-dime-btn', onAddDimeClicked);
     $(document).on('click', '#add-nickel-btn', onAddNickelClicked);
+    $(document).on('click', '#add-penny-btn', onAddPennyClicked);
 
     /*PURCHASE EVENT HANDLERS*/
     $(document).on('click', '.item-box', onItemBoxClicked);
@@ -61,10 +61,12 @@ function formatItemBox(item) {
 function refreshItems(itemList) {
     //restart counter and clear grid
     itemCt = 1;
-    itemsGrid.empty();
+    itemSelected = null;
+    itemPrice = null;
+    $('#vm-item-grid').empty();
 
     for (let item of itemList) {
-        itemsGrid.append(formatItemBox(item));
+        $('#vm-item-grid').append(formatItemBox(item));
     }
 }
 
@@ -79,8 +81,8 @@ function updateMoney(money) {
 }
 
 /**
- * Render transaction messages to user
- * @param msg {string} messages concerning items, change, or purchase success
+ * Render transaction or error messages to user
+ * @param msg {string} messages concerning items, money added, purchase success, or any error throws from server
  */
 function updateMsg(msg) {
     $('#purchase-feedback').val(msg);
@@ -238,11 +240,9 @@ function onPurchaseItemClicked(e) {
 
             updateChange(changeString);
 
-            //clear and deselect
+            //clear and refresh
             money = 0.00;
             updateMoney(money);
-            itemSelected = null;
-            itemPrice = null;
             updateMsg("Thank you!!!");
             ds.getAllItems(refreshItems, updateMsg);
         }, function (jqXHR, textStatus, errorThrown) {
@@ -264,29 +264,4 @@ function onChangeReturnClicked(e) {
     $('#purchase-feedback').val('');
     $('#item-to-buy').val('');
     $('#change-coins').val('');
-}
-
-/*Errors - FIXME I don't think I even need these */
-/**
- * Error handler - for attempting to purchase out of stock items
- * @param error {error} 422 Unprocessable Entity from API
- */
-function handleOutOfStockError(error) {
-    $('#purchase-feedback').val(error.responseJSON.message);
-}
-
-/**
- * Error handler - for attempting to purchase a valid item with short change
- * @param error {error} 422 Unprocessable Entity from API
- */
-function handleShortChangeError(error) {
-    $('#purchase-feedback').val(error.responseJSON.message);
-}
-
-/**
- * Create an alert out of JSON response
- * @param msg {string} http status from JSON
- */
-function alertError(msg) {
-    alert(msg.responseJSON.message); //debug only
 }
