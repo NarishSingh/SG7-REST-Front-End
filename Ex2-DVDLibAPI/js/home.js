@@ -7,24 +7,7 @@ $(document).ready(function () {
     loadLibrary();
 
     //create DVD trigger handler
-    $(document).on('click', '#create-dvd-btn', function () {
-        $('#create-dvd-modal').modal();
-
-        //create DVD button from modal handler
-        $(document).on('click', '#create-dvd-modal-btn', function (e) {
-            if (validateReleaseYearInput($('#create-releaseYr-input').val())) {
-                createDvdEntry();
-
-                //reset and hide
-                $('#create-title-input').val('');
-                $('#create-releaseYr-input').val('');
-                $('#create-director-input').val('');
-                $('#create-rating-select').val("G"); //Default selection
-                $('#create-notes-input').val('');
-                $('#create-dvd-modal').modal("hide");
-            }
-        });
-    });
+    $(document).on('click', '#create-dvd-btn', onCreateDvdBtnClicked);
 
     //search DVD button handler
     $(document).on('click', '#search-dvd-input', function () {
@@ -42,14 +25,7 @@ $(document).ready(function () {
     });
 
     //Delete DVD icon handler
-    $(document).on('click', '.deleteDvd', function () {
-        $('#del-confirm-modal').modal();
-
-        $(document).on('click', '#delete-confirm-btn', function (e) {
-            deleteDvdEntry(); //FIXME not deleting
-            $('#del-confirm-modal').modal("hide");
-        });
-    });
+    $(document).on('click', '.deleteDvd', onDeleteBtnClicked);
 });
 
 ////////////////////////////////////////////////////////
@@ -88,11 +64,11 @@ function formatDvdEntry(dvd) {
 /**
  * Render error message on page
  */
-function errorMsg() {
+function errorMsg(msg) {
     $('#errorMessages')
         .append($('<li>'))
         .attr({class: 'list-group-item list-group-item-danger'})
-        .text('Error calling server');
+        .text(msg);
 }
 
 /**
@@ -105,37 +81,34 @@ function loadLibrary() {
         $.each(dvdList, function (i, dvd) {
             $('#library-entries').append(formatDvdEntry(dvd));
         });
-    }, errorMsg);
+    }, errorMsg('Error calling server'));
 }
 
 /**
  * Create a new DVD entry via POST
  */
 function createDvdEntry() {
-    $.ajax({
-        type: 'POST',
-        url: 'https://tsg-dvds.herokuapp.com/dvd/',
-        data: JSON.stringify({
-            title: $('#create-title-input').val(),
-            releaseYear: $('#create-releaseYr-input').val(),
-            director: $('#create-director-input').val(),
-            rating: $('#create-rating-select').val(),
-            notes: $('#create-notes-input').val()
-        }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        'dataType': 'json',
-        success: function (newDvd, status) {
-            clearErrorMsgs();
-            loadLibrary();
-        },
-        error: function () {
-            $('#errorMessages')
-                .append($('<li>'))
-                .attr({class: 'list-group-item list-group-item-danger'})
-                .text('Error calling web service.');
+    ds.createDvd(function () {
+        clearErrorMsgs();
+        loadLibrary();
+    }, errorMsg('Error calling server'));
+}
+
+function onCreateDvdBtnClicked() {
+    $('#create-dvd-modal').modal();
+
+    //create DVD button from modal handler
+    $(document).on('click', '#create-dvd-modal-btn', function () {
+        if (validateReleaseYearInput($('#create-releaseYr-input').val())) {
+            createDvdEntry();
+
+            //reset and hide
+            $('#create-title-input').val('');
+            $('#create-releaseYr-input').val('');
+            $('#create-director-input').val('');
+            $('#create-rating-select').val("G"); //Default selection
+            $('#create-notes-input').val('');
+            $('#create-dvd-modal').modal("hide");
         }
     });
 }
@@ -168,17 +141,20 @@ function editDvdEntry() {
 
 /**
  * DELETE a DVD entry
- * @param dvdEntry {object}
+ * @param dvdId {number} id of an existing dvd in library
  */
-function deleteDvdEntry(dvdEntry) {
-    let dvdId = $(this).data("dvdid"); //FIXME value is coming back undefined
+function deleteDvdEntry(dvdId) {
+    ds.deleteDvd(dvdId, function () {
+        clearErrorMsgs();
+        loadLibrary();
+    }, errorMsg('Error calling server'));
 
+    /*
     $.ajax({
         type: 'DELETE',
         url: 'https://tsg-dvds.herokuapp.com/dvd/' + dvdId,
         success: function (status) {
-            clearErrorMsgs();
-            loadLibrary();
+
         },
         error: function () {
             $('#errorMessages')
@@ -186,6 +162,18 @@ function deleteDvdEntry(dvdEntry) {
                 .attr({class: 'list-group-item list-group-item-danger'})
                 .text('Error calling web service.');
         }
+    });
+
+     */
+}
+
+function onDeleteBtnClicked(e) {
+    let dvdId = $(this).data("dvdid");
+    $('#del-confirm-modal').modal();
+
+    $(document).on('click', '#delete-confirm-btn', function () {
+        deleteDvdEntry(dvdId);
+        $('#del-confirm-modal').modal("hide");
     });
 }
 
@@ -195,13 +183,10 @@ function deleteDvdEntry(dvdEntry) {
  * @returns {boolean} true if param has 4 digits
  */
 function validateReleaseYearInput(yearInput) {
-    let acceptable = new RegExp("[0-9]{4}");
+    let acceptable = new RegExp("\d{4}");
 
     if (isNaN(yearInput) || !acceptable.test(yearInput)) {
-        $('#errorMessages')
-            .append($('<li>'))
-            .attr({class: 'list-group-item list-group-item-danger'})
-            .text("4 digits required. Please re-enter a valid release year.");
+        errorMsg('4 digits required. Please re-enter a valid release year.')
 
         return false;
     } else {
