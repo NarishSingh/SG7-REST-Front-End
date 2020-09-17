@@ -86,26 +86,26 @@ function formatDvdEntry(dvd) {
 }
 
 /**
+ * Render error message on page
+ */
+function errorMsg() {
+    $('#errorMessages')
+        .append($('<li>'))
+        .attr({class: 'list-group-item list-group-item-danger'})
+        .text('Error calling server');
+}
+
+/**
  * Load all titles from server via GET and render to table
  */
 function loadLibrary() {
     clearLibraryTable();
 
-    $.ajax({
-        type: 'GET',
-        url: 'https://tsg-dvds.herokuapp.com/dvds/',
-        success: function (dvdArr, status) {
-            $.each(dvdArr, function (i, dvd) {
-                $('#library-entries').append(formatDvdEntry(dvd));
-            });
-        },
-        error: function () {
-            $('#errorMessages')
-                .append($('<li>'))
-                .attr({class: 'list-group-item list-group-item-danger'})
-                .text('Error calling web service.');
-        }
-    });
+    ds.readAllDvds(function (dvdList, status) {
+        $.each(dvdList, function (i, dvd) {
+            $('#library-entries').append(formatDvdEntry(dvd));
+        });
+    }, errorMsg);
 }
 
 /**
