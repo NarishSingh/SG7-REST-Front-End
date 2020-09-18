@@ -60,7 +60,7 @@ let DvdDataService = function () {
             type: 'POST',
             url: 'https://tsg-dvds.herokuapp.com/dvd/',
             data: JSON.stringify(dvd),
-            contentType: 'application/json',
+            contentType: "application/json",
             success: callback,
             error: errorFunc
         });

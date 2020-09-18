@@ -1,5 +1,16 @@
 let ds = new DataService();
 
+$(document).ready(function () {
+    ds.getDvds(refreshTable, alertError);
+
+    $(document).on('submit', '#addDvd', onAddDvdSubmit);
+    $(document).on('submit', '#editDvd', onEditDvdSubmit);
+
+    $(document).on('click', '.deleteDvd', onDeleteDvdClicked);
+
+    $(document).on('click', '.editDvd', onEditDvdClicked);
+});
+
 // ///////////////////////////////////////////////////////////
 // Page manipulation methods
 function formatRow(dvd) {
@@ -97,15 +108,3 @@ function onEditDvdSubmit(e) {
 function alertError(msg) {
     alert(msg.responseJSON.message);
 }
-
-// ////////////////////////////////////////////////////////////////
-$(document).ready(function () {
-    ds.getDvds(refreshTable, alertError);
-
-    $(document).on('submit', '#addDvd', onAddDvdSubmit);
-    $(document).on('submit', '#editDvd', onEditDvdSubmit);
-
-    $(document).on('click', '.deleteDvd', onDeleteDvdClicked);
-
-    $(document).on('click', '.editDvd', onEditDvdClicked);
-});

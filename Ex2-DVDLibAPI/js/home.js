@@ -24,8 +24,6 @@ $(document).ready(function () {
         //TODO implement
 
         $('#edit-dvd-modal').modal();
-
-
     });
      */
 
@@ -78,6 +76,7 @@ function errorMsg() {
  * Load all titles from server via GET and render to table
  */
 function loadLibrary() {
+    clearErrorMsgs();
     clearLibraryTable();
 
     ds.readAllDvds(function (dvdArr, status) {
@@ -91,26 +90,23 @@ function loadLibrary() {
  * Create a new DVD entry via POST
  */
 function createDvdEntry(dvd) {
-    ds.createDvd(dvd, function () {
-        clearErrorMsgs();
-        loadLibrary();
-    }, errorMsg);
+    ds.createDvd(dvd, loadLibrary, errorMsg);
 }
 
 function onCreateDvdBtnClicked(e) {
     $('#create-dvd-modal').modal();
 
-    let dvd = {
-        title: $('#create-title-input').val(),
-        releaseYear: $('#create-releaseYr-input').val(),
-        director: $('#create-director-input').val(),
-        rating: $('#create-rating-select').val(),
-        notes: $('#create-notes-input').val()
-    };
-
     //create DVD button from modal handler
     $(document).on('click', '#create-confirm-btn', function (e) {
         if (validateReleaseYearInput($('#create-releaseYr-input').val())) {
+            let dvd = {
+                title: $('#create-title-input').val(),
+                releaseYear: $('#create-releaseYr-input').val(),
+                director: $('#create-director-input').val(),
+                rating: $('#create-rating-select').val(),
+                notes: $('#create-notes-input').val()
+            };
+
             createDvdEntry(dvd);
 
             //reset and hide
@@ -155,34 +151,14 @@ function editDvdEntry() {
  * @param dvdId {number} id of an existing dvd in library
  */
 function deleteDvdEntry(dvdId) {
-    ds.deleteDvd(dvdId, function () {
-        clearErrorMsgs();
-        loadLibrary();
-    }, errorMsg);
-
-    /*
-    $.ajax({
-        type: 'DELETE',
-        url: 'https://tsg-dvds.herokuapp.com/dvd/' + dvdId,
-        success: function (status) {
-
-        },
-        error: function () {
-            $('#errorMessages')
-                .append($('<li>'))
-                .attr({class: 'list-group-item list-group-item-danger'})
-                .text('Error calling web service.');
-        }
-    });
-
-     */
+    ds.deleteDvd(dvdId, loadLibrary, errorMsg);
 }
 
 function onDeleteBtnClicked(e) {
     let dvdId = $(this).data("dvdid");
     $('#del-confirm-modal').modal();
 
-    $(document).on('click', '#delete-confirm-btn', function () {
+    $(document).on('click', '#delete-confirm-btn', function (e) {
         deleteDvdEntry(dvdId);
         $('#del-confirm-modal').modal("hide");
     });
@@ -194,7 +170,7 @@ function onDeleteBtnClicked(e) {
  * @returns {boolean} true if param has 4 digits
  */
 function validateReleaseYearInput(yearInput) {
-    // let acceptable = new RegExp('\\d{4}');
+    // let acceptable = new RegExp('\\d{4}'); //not working?
     let acceptable = /[0-9]{4}/;
 
     if (acceptable.test(yearInput)) {
