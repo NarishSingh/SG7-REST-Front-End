@@ -12,20 +12,9 @@ $(document).ready(function () {
     //Delete DVD icon handler
     $(document).on('click', '.deleteDvd', onDeleteBtnClicked);
 
-    /*
-    //search DVD button handler
-    $(document).on('click', '#search-dvd-input', function () {
+    //View DVD title handler
+    $(document).on('click', '.dvd-entry', );
 
-    });
-
-    //Edit DVD icon handle
-    $(document).on('click', '.editdvd', function () {
-        //get dvd from id and pull in original entries
-        //TODO implement
-
-        $('#edit-dvd-modal').modal();
-    });
-     */
 
 });
 
@@ -53,7 +42,7 @@ function clearLibraryTable() {
  */
 function formatDvdEntry(dvd) {
     return `<tr>
-        <td>${dvd.title}</td>
+        <td class="dvd-entry">${dvd.title}</td>
         <td>${dvd.releaseYear}</td>
         <td>${dvd.director}</td>
         <td>${dvd.rating}</td>
@@ -73,6 +62,43 @@ function errorMsg() {
 }
 
 /**
+ * Validate a year input for dvd entry creation or editing
+ * @param yearInput {string} a valid year
+ * @returns {boolean} true if param has 4 digits
+ */
+function validateReleaseYearInput(yearInput) {
+    // let acceptable = new RegExp('\\d{4}'); //not working?
+    let acceptable = /[0-9]{4}/;
+
+    if (acceptable.test(yearInput)) {
+        return true;
+    } else {
+        $('#errorMessages')
+            .append($('<li>'))
+            .attr({class: 'list-group-item list-group-item-danger'})
+            .text("4 digits required. Please re-enter a valid release year.");
+
+        return false;
+    }
+}
+
+/**
+ * Create a new DVD entry via POST
+ */
+function createDvdEntry(dvd) {
+    ds.createDvd(dvd, loadLibrary, errorMsg);
+}
+
+/**
+ * DELETE a DVD entry
+ * @param dvdId {number} id of an existing dvd in library
+ */
+function deleteDvdEntry(dvdId) {
+    ds.deleteDvd(dvdId, loadLibrary, errorMsg);
+}
+
+/*HANDLERS*/
+/**
  * Load all titles from server via GET and render to table
  */
 function loadLibrary() {
@@ -87,12 +113,9 @@ function loadLibrary() {
 }
 
 /**
- * Create a new DVD entry via POST
+ * Handler for create dvd button click and its respective modal
+ * @param e {event}
  */
-function createDvdEntry(dvd) {
-    ds.createDvd(dvd, loadLibrary, errorMsg);
-}
-
 function onCreateDvdBtnClicked(e) {
     $('#create-dvd-modal').modal();
 
@@ -120,40 +143,10 @@ function onCreateDvdBtnClicked(e) {
     });
 }
 
-function getDvdById(e) {
-    e.preventDefault();
-
-    let dvdId = $(this).data("dvdid"); //FIXME value is coming back undefined
-
-    return $.ajax({
-        type: 'GET',
-        url: 'https://tsg-dvds.herokuapp.com/dvd/' + dvdId,
-        success: function () {
-            clearErrorMsgs();
-            //TODO is there something else to do here?
-        },
-        error: function () {
-            $('#errorMessages')
-                .append($('<li>'))
-                .attr({class: 'list-group-item list-group-item-danger'})
-                .text('Error calling web service.');
-        }
-    });
-}
-
-//TODO implement this for tr's -> edit and delete
-function editDvdEntry() {
-
-}
-
 /**
- * DELETE a DVD entry
- * @param dvdId {number} id of an existing dvd in library
+ * Handler for a delete dvd icon and its confirmation modal
+ * @param e {event}
  */
-function deleteDvdEntry(dvdId) {
-    ds.deleteDvd(dvdId, loadLibrary, errorMsg);
-}
-
 function onDeleteBtnClicked(e) {
     let dvdId = $(this).data("dvdid");
     $('#del-confirm-modal').modal();
@@ -162,25 +155,4 @@ function onDeleteBtnClicked(e) {
         deleteDvdEntry(dvdId);
         $('#del-confirm-modal').modal("hide");
     });
-}
-
-/**
- * Validate a year input for dvd entry creation or editing
- * @param yearInput {string} a valid year
- * @returns {boolean} true if param has 4 digits
- */
-function validateReleaseYearInput(yearInput) {
-    // let acceptable = new RegExp('\\d{4}'); //not working?
-    let acceptable = /[0-9]{4}/;
-
-    if (acceptable.test(yearInput)) {
-        return true;
-    } else {
-        $('#errorMessages')
-            .append($('<li>'))
-            .attr({class: 'list-group-item list-group-item-danger'})
-            .text("4 digits required. Please re-enter a valid release year.");
-
-        return false;
-    }
 }
