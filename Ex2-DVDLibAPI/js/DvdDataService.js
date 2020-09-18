@@ -55,22 +55,12 @@ let DvdDataService = function () {
         });
     }
 
-    self.createDvd = function (callback, errorFunc) {
+    self.createDvd = function (dvd, callback, errorFunc) {
         $.ajax({
             type: 'POST',
             url: 'https://tsg-dvds.herokuapp.com/dvd/',
-            data: JSON.stringify({
-                title: $('#create-title-input').val(),
-                releaseYear: $('#create-releaseYr-input').val(),
-                director: $('#create-director-input').val(),
-                rating: $('#create-rating-select').val(),
-                notes: $('#create-notes-input').val()
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            'dataType': 'json',
+            data: JSON.stringify(dvd),
+            contentType: 'application/json',
             success: callback,
             error: errorFunc
         });

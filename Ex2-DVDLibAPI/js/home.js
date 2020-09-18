@@ -9,9 +9,13 @@ $(document).ready(function () {
     //create DVD trigger handler
     $(document).on('click', '#create-dvd-btn', onCreateDvdBtnClicked);
 
+    //Delete DVD icon handler
+    $(document).on('click', '.deleteDvd', onDeleteBtnClicked);
+
+    /*
     //search DVD button handler
     $(document).on('click', '#search-dvd-input', function () {
-        //TODO implement
+
     });
 
     //Edit DVD icon handle
@@ -23,9 +27,8 @@ $(document).ready(function () {
 
 
     });
+     */
 
-    //Delete DVD icon handler
-    $(document).on('click', '.deleteDvd', onDeleteBtnClicked);
 });
 
 ////////////////////////////////////////////////////////
@@ -64,11 +67,11 @@ function formatDvdEntry(dvd) {
 /**
  * Render error message on page
  */
-function errorMsg(msg) {
+function errorMsg() {
     $('#errorMessages')
         .append($('<li>'))
         .attr({class: 'list-group-item list-group-item-danger'})
-        .text(msg);
+        .text("Error Calling Server");
 }
 
 /**
@@ -77,30 +80,38 @@ function errorMsg(msg) {
 function loadLibrary() {
     clearLibraryTable();
 
-    ds.readAllDvds(function (dvdList, status) {
-        $.each(dvdList, function (i, dvd) {
+    ds.readAllDvds(function (dvdArr, status) {
+        $.each(dvdArr, function (i, dvd) {
             $('#library-entries').append(formatDvdEntry(dvd));
         });
-    }, errorMsg('Error calling server'));
+    }, errorMsg);
 }
 
 /**
  * Create a new DVD entry via POST
  */
-function createDvdEntry() {
-    ds.createDvd(function () {
+function createDvdEntry(dvd) {
+    ds.createDvd(dvd, function () {
         clearErrorMsgs();
         loadLibrary();
-    }, errorMsg('Error calling server'));
+    }, errorMsg);
 }
 
-function onCreateDvdBtnClicked() {
+function onCreateDvdBtnClicked(e) {
     $('#create-dvd-modal').modal();
 
+    let dvd = {
+        title: $('#create-title-input').val(),
+        releaseYear: $('#create-releaseYr-input').val(),
+        director: $('#create-director-input').val(),
+        rating: $('#create-rating-select').val(),
+        notes: $('#create-notes-input').val()
+    };
+
     //create DVD button from modal handler
-    $(document).on('click', '#create-dvd-modal-btn', function () {
+    $(document).on('click', '#create-confirm-btn', function (e) {
         if (validateReleaseYearInput($('#create-releaseYr-input').val())) {
-            createDvdEntry();
+            createDvdEntry(dvd);
 
             //reset and hide
             $('#create-title-input').val('');
@@ -147,7 +158,7 @@ function deleteDvdEntry(dvdId) {
     ds.deleteDvd(dvdId, function () {
         clearErrorMsgs();
         loadLibrary();
-    }, errorMsg('Error calling server'));
+    }, errorMsg);
 
     /*
     $.ajax({
@@ -183,13 +194,17 @@ function onDeleteBtnClicked(e) {
  * @returns {boolean} true if param has 4 digits
  */
 function validateReleaseYearInput(yearInput) {
-    let acceptable = new RegExp("\d{4}");
+    // let acceptable = new RegExp('\\d{4}');
+    let acceptable = /[0-9]{4}/;
 
-    if (isNaN(yearInput) || !acceptable.test(yearInput)) {
-        errorMsg('4 digits required. Please re-enter a valid release year.')
+    if (acceptable.test(yearInput)) {
+        return true;
+    } else {
+        $('#errorMessages')
+            .append($('<li>'))
+            .attr({class: 'list-group-item list-group-item-danger'})
+            .text("4 digits required. Please re-enter a valid release year.");
 
         return false;
-    } else {
-        return true;
     }
 }
